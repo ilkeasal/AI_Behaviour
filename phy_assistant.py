@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import openai
 import time
 import random
+import streamlit as st
 
 openai_api_key = st.secrets["AO_KEY"]
 #load_dotenv(".env")
@@ -21,7 +22,7 @@ from langchain_core.prompts.prompt import PromptTemplate
 from langchain_community.graphs import Neo4jGraph
 from neo4j import GraphDatabase
 
-import streamlit as st
+
 
 st.title(" Your Favorite Physical Health Assistant :rocket:")
 
