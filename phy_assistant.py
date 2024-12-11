@@ -30,7 +30,7 @@ st.title(" Your Favorite Physical Health Assistant :rocket:")
 ###########
 NEO4J_USERNAME = os.environ["NEO4J_USERNAME"]
 NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
-neo4j_url = "http://localhost:7474"
+neo4j_url = "neo4j+s://e8df9493.databases.neo4j.io"
 
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
 with GraphDatabase.driver(neo4j_url, auth=AUTH) as driver:
