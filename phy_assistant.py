@@ -28,7 +28,7 @@ st.title(" Your Favorite Physical Health Assistant :rocket:")
 ## Neo4j :
 
 ###########
-NEO4J_USERNAME = "neo4j
+NEO4J_USERNAME = "neo4j"
 #NEO4J_USERNAME = os.environ["NEO4J_USERNAME"]
 NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
 neo4j_url = "neo4j+s://e8df9493.databases.neo4j.io"
