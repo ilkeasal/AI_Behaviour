@@ -8,7 +8,7 @@ import random
 
 #load_dotenv(".env")
 #openai.api_key = os.getenv("OPENAI_KEY")
-openai.api_key = os.environ["OPENAI_KEY"]
+openai.api_key = os.getenv("OPENAI_KEY")
 
 if not openai.api_key:
     raise ValueError("OPENAI_API_KEY not found in environment variables.")
