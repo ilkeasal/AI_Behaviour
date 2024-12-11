@@ -39,7 +39,7 @@ with GraphDatabase.driver(neo4j_url, auth=AUTH) as driver:
 
 session = driver.session()
 
-graph = Neo4jGraph(url=neo4j_url, username=neo4j_username, password=neo4j_password)
+graph = Neo4jGraph(url=neo4j_url, username=NEO4J_USERNAME, password=NEO4J_PASSWORD)
 
 
 def variable_nodes_names():
