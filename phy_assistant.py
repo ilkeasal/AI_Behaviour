@@ -6,7 +6,7 @@ import time
 import random
 
 
-load_dotenv(".env")
+#load_dotenv(".env")
 #openai.api_key = os.getenv("OPENAI_KEY")
 openai.api_key = os.environ["OPENAI_KEY"]
 
