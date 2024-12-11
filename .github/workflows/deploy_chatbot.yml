@@ -23,6 +23,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Debug Environment
+        env:
+          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
+        run: |
+          echo "OPENAI_KEY=${{ secrets.OPENAI_KEY }}"  # Should print ****
+          echo "NEO4J_PASSWORD=${{ secrets.NEO4J_PASSWORD }}"
+
       - name: Run chatbot
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
