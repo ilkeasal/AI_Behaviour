@@ -5,10 +5,10 @@ import openai
 import time
 import random
 
-
+openai_api_key = st.secrets["AO_KEY"]
 #load_dotenv(".env")
 #openai.api_key = os.getenv("OPENAI_KEY")
-openai.api_key = os.environ["OPENAI_KEY"]
+#openai.api_key = os.environ["OPENAI_KEY"]
 
 if not openai.api_key:
     raise ValueError("OPENAI_API_KEY not found in environment variables.")
@@ -30,7 +30,8 @@ st.title(" Your Favorite Physical Health Assistant :rocket:")
 ###########
 NEO4J_USERNAME = "neo4j"
 #NEO4J_USERNAME = os.environ["NEO4J_USERNAME"]
-NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
+NEO4J_PASSWORD = st.secrets["NEO4J_PASSWORD"]
+#NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
 neo4j_url = "neo4j+s://e8df9493.databases.neo4j.io"
 
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
