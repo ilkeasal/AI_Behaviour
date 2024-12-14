@@ -182,25 +182,39 @@ def initialize_users_level_dict(unstable_concept_dict):
 
 
 def assess_concepts_prompt(concept_name,user_prompt,chat_history):
-    q_ask_prompt = PromptTemplate(input_variables=['chosen_concept'],
-                                  template=f"""Respond to the  {user_prompt} with a friendly and relevant acknowledgement. If the users' input includes a question or request for clarification, address it directly. Then naturally steer the conversation toward discussing aspects related to {concept_name} about physical activity. {concept_name} {concept_definitions_dict[concept_name]}.Ask exactly one direct and neutral question aimed at understanding the user's current behaviour or thoughts about {concept_name}. The question must assess their current level on {concept_name}, without making any assumptions about what the user does/thinks or does not do/think. Do not make assumptions about the user based solely on their input. Ensure that your response transitions smoothly from {user_prompt} and is open-ended to encourage discussion. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant aspects from the chat history ({chat_history}) to maintain context but do not repeat previous responses verbatim. Each response should contribute new insights or questions to the conversation without breaking the flow or including unnecessary meta-information.""")
-    chain = LLMChain(llm=llm, prompt=q_ask_prompt, verbose=True, memory=memory,
-                     output_key="question")
-    response = chain.invoke({"chosen_concept": concept_name})["question"]
+"""Assess concepts with openai + formatted prompt"""
+    formatted_prompt = f"""Respond to the  {user_prompt} with a friendly and relevant acknowledgement. If the users' input includes a question or request for clarification, address it directly. Then naturally steer the conversation toward discussing aspects related to {concept_name} about physical activity. {concept_name} {concept_definitions_dict[concept_name]}.Ask exactly one direct and neutral question aimed at understanding the user's current behaviour or thoughts about {concept_name}. The question must assess their current level on {concept_name}, without making any assumptions about what the user does/thinks or does not do/think. Do not make assumptions about the user based solely on their input. Ensure that your response transitions smoothly from {user_prompt} and is open-ended to encourage discussion. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant aspects from the chat history ({chat_history}) to maintain context but do not repeat previous responses verbatim. Each response should contribute new insights or questions to the conversation without breaking the flow or including unnecessary meta-information."""
+    print(f" Assess concepts prompt : {assess_concepts_prompt}")
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages =[{
+            "role":"assistant",
+            "content":formatted_prompt
+        }]
+    )
+
+    response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
         st.session_state.messages.append({"role": "assistant", "content": response})
 
+
 def give_advice_prompt(main_problem,user_prompt,chat_history):
-    combined_input = f"The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice that to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly."
-    advice_prompt = PromptTemplate(input_variables=['main_problem_node'],
-                                   template=f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. {combined_input} Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought.""")
-    chain = LLMChain(llm=llm, prompt=advice_prompt, verbose=True, memory=memory,
-                     output_key="given_advice")
-    response = chain.invoke({"main_problem_node": main_problem})["given_advice"]
+    """Give advice with openai + formatted prompt"""
+    formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice that to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly.  Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
+    print(f"Give advice prompt : {formatted_prompt}")
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{
+            "role":"assistant",
+            "content":formatted_prompt
+        }]
+    )
+    response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
         st.session_state.messages.append({"role": "assistant", "content": response})
+
 
 def is_it_key(concept_name,unstable_concept_dict):
     """Here the unstable concept dict will be st.session_state.unstable_concept_dictionary"""
@@ -268,25 +282,40 @@ def give_advice_sent(users_level_dict):
 
 
 def give_advice_users_level(give_advice_sentences):
-
+    """Give advice sentence with openai + formatted prompt"""
     combined_input = "In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly."
-    advice_prompt = PromptTemplate(input_variables=['main_problem_node'],
-                                   template=f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way. Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. {give_advice_sentences}. Based on this information, user's input : {user_prompt}, and chat history: {chat_history} offer advice to help the user become more physically active. {combined_input} Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening. Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought.""")
-    chain = LLMChain(llm=llm, prompt=advice_prompt, verbose=True, memory=memory,
-                     output_key="given_advice")
-    response = chain.invoke({"main_problem_node": combined_input})["given_advice"]
+    formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way. Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. {give_advice_sentences}.Based on this information, user's input : {user_prompt}, and chat history: {chat_history} offer advice to help the user become more physically active.{combined_input}. Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening. Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
+    print(f"Give advice users level Prompt : {formatted_prompt}")
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages =[
+            {
+                "role":"assistant",
+                "content":formatted_prompt
+            }
+        ]
+    )
+    response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
         st.session_state.messages.append({"role": "assistant", "content": response})
+    
 
 def clarification_question(last_asked_concept,chat_history):
     assistant_answer = " ".join(chat_history[-2])
     user_answer = " ".join(chat_history[-1])
-    clarification_q_prompt = PromptTemplate(input=["last_asked_c"], template=f"""
-                                            The user's response '{user_answer}' did not appropriately answer the question '{assistant_answer}'. Acknowledge the user's response naturally and empathetically. If the users' input includes a question or request for clarification, address it directly. Then seamlessly transition to rephrasing and simplifying the original question to steer the conversation back to the concept '{last_asked_concept}'. {last_asked_concept} {concept_definitions_dict[last_asked_concept]}. Ensure that you only ask one revised question and that question is direct and neutral and aims to understand user's current behaviour or thoughts about {last_asked_concept} while flowing naturally from the acknowledgement. Your output should be concise, with a smooth transition and a revised question. Take the chat history into account {chat_history} so that you do not repeat yourself. It is very important that you do not ask the same question word-by-word. Do not include any explanations, reflections, or commentary about the purpose or structure of your response.""")
-    chain = LLMChain(llm=llm, prompt=clarification_q_prompt, verbose=True, memory=memory,
-                     output_key="output")
-    response = chain.invoke({"last_asked_c": last_asked_concept})["output"]
+    formatted_prompt = f"""The user's response '{user_answer}' did not appropriately answer the question '{assistant_answer}'. Acknowledge the user's response naturally and empathetically. If the users' input includes a question or request for clarification, address it directly. Then seamlessly transition to rephrasing and simplifying the original question to steer the conversation back to the concept '{last_asked_concept}'. {last_asked_concept} {concept_definitions_dict[last_asked_concept]}. Ensure that you only ask one revised question and that question is direct and neutral and aims to understand user's current behaviour or thoughts about {last_asked_concept} while flowing naturally from the acknowledgement. Your output should be concise, with a smooth transition and a revised question. Take the chat history into account {chat_history} so that you do not repeat yourself. It is very important that you do not ask the same question word-by-word. Do not include any explanations, reflections, or commentary about the purpose or structure of your response."""
+    print(f"Clarification question Prompt : {formatted_prompt}")
+    completion = client.chat.completions.create(
+        model = "gpt-4o-mini",
+        messages = [
+            {
+                "role":"assistant",
+                "content":formatted_prompt
+            }
+        ]
+    )
+    response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
         st.session_state.messages.append({"role": "assistant", "content": response})
@@ -297,6 +326,7 @@ def validation_question(last_asked_concept,chat_history):
     user_answer = " ".join(chat_history[-1])
     validation_question = (
         f"Does the user's response '{user_answer}' appropriately answer the question asked by the assistant '{assistant_answer}' to assess the users' level on {last_asked_concept}? {last_asked_concept} {concept_definitions_dict[last_asked_concept]} If the user's response provides clear and relevant information about their behaviours, attitudes, or practices related to  {last_asked_concept}, treat it as sufficient to evaluate their level. This includes explicit affirmations or denials (e.g., 'Yes, I do.' or 'No, I don't'), or responses that, while not explicit, clearly imply the user's level of engagement with {last_asked_concept}. For example, a response that describes consistent or inconsistent behaviours directly tied to {last_asked_concept} can be enough to make an assessment. If the user's response provides enough information to evaluate their level on {last_asked_concept}, return 'yes' and provide a brief explanation of why it is sufficient. If the user's response does not address the concept or is too vague to make an assessment, return 'no' and provide a brief explanation of what is missing.")
+    print(f"Validation question Prompt: {validation_question}")
     completion = client.chat.completions.create(model="gpt-4o-mini", messages=[
         {"role": "assistant",
          "content": validation_question}
