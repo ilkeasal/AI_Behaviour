@@ -6,7 +6,7 @@ import time
 import random
 import streamlit as st
 
-openai_api_key = st.secrets["AO_KEY"]
+openai.api_key= st.secrets["AO_KEY"]
 #load_dotenv(".env")
 #openai.api_key = os.getenv("OPENAI_KEY")
 #openai.api_key = os.environ["OPENAI_KEY"]
