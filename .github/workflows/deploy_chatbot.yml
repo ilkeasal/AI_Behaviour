@@ -25,14 +25,14 @@ jobs:
 
       - name: Debug Environment
         env:
-          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          OPENAI_KEY: ${{ secrets.AO_KEY }}
           NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
         run: |
-          echo "OPENAI_KEY=${{ secrets.OPENAI_KEY }}"  # Should print ****
+          echo "OPENAI_KEY=${{ secrets.AO_KEY }}"  # Should print ****
           echo "NEO4J_PASSWORD=${{ secrets.NEO4J_PASSWORD }}"
 
       - name: Run chatbot
         env:
-          OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
+          OPENAI_KEY: ${{ secrets.AO_KEY }}
           NEO4J_PASSWORD: ${{ secrets.NEO4J_PASSWORD }}
         run: python phy_assistant.py
