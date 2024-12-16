@@ -24,5 +24,4 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run chatbot
-        env:
         run: python phy_assistant.py
