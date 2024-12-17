@@ -972,7 +972,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
 
 
-upload_to_bucket("phy_assistant_bucket",log_file,user_id=st.session_state.user_id)
+#upload_to_bucket("phy_assistant_bucket",log_file,user_id=st.session_state.user_id)
 #
 
 
