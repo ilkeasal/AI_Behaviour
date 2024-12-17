@@ -57,7 +57,7 @@ if "user_id" not in st.session_state:
 
 
 def upload_to_bucket(bucket_name,log_data,user_id):
-    client = storage.Client()
+    client = storage.Client(project="Logging experiment")
     bucket = client.bucket(bucket_name)
     blob_name = f"logs/user_{user_id}.log"
     blob = bucket.blob(blob_name)
