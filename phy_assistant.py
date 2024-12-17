@@ -9,6 +9,7 @@ from google.cloud import storage
 import uuid
 from uuid_shortener import UUIDShortener
 import logging
+from io import StringIO
 
 openai.api_key= st.secrets["OPENAI_KEY"]
 GOOGLE_APPLICATION_CREDENTIALS = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
@@ -53,40 +54,43 @@ graph = Neo4jGraph(url=neo4j_url, username=NEO4J_USERNAME, password=NEO4J_PASSWO
 if "user_id" not in st.session_state:
     st.session_state.user_id = UUIDShortener.encode(str(uuid.uuid4()))
 
-log_file = f"logs/user_{st.session_state.user_id}.log"
 
-if not os.path.exists("logs"):
-    os.makedirs("logs")
 
-with open(log_file,"a") as f:
-    f.write("This is the new log entry from Github!")
-
-# Set up Logger :
-
-logger = logging.getLogger("local_test_logger")
-logger.setLevel(logging.DEBUG)
-
-# FileHandler to write logs to the log file:
-file_handler = logging.FileHandler(log_file)
-file_handler.setLevel(logging.DEBUG)
-
-# Defining a log format :
-formatter = logging.Formatter("%(asctime)s -%s(levelname)s -%(message)s")
-file_handler.setFormatter(formatter)
-
-# Add handler to logger
-
-if not logger.handlers:
-    logger.addHandler(file_handler)
-
-# Google cloud storage setup :
-
-def upload_to_bucket(bucket_name,source_file,user_id):
+def upload_to_bucket(bucket_name,log_data,user_id):
     client = storage.Client()
     bucket = client.bucket(bucket_name)
     blob_name = f"logs/user_{user_id}.log"
     blob = bucket.blob(blob_name)
-    blob.upload_from_filename(source_file)
+    
+    blob.upload_from_string(log_data,content_type="text/plain")
+
+if "log_buffer" not in st.session_state:
+    st.session_state.log_buffer = StringIO()
+
+# adding new log entries
+st.session_state.log_buffer("This is a new log entry from the chatbot!\n")
+
+
+# Set up Logger :
+logger = logging.getLogger("local_test_logger")
+logger.setLevel(logging.DEBUG)
+
+# FileHandler to write logs to the log file:
+stream_handler = logging.StreamHandler(st.session_state.log_buffer)
+stream_handler.setLevel(logging.DEBUG)
+
+# Defining a log format :
+formatter = logging.Formatter("%(asctime)s -%s(levelname)s -%(message)s")
+stream_handler.setFormatter(formatter)
+
+# Add handler to logger
+
+if not logger.handlers:
+    logger.addHandler(stream_handler)
+
+logger.debug("This is an examplee!")
+
+# Google cloud storage setup :
 
 if "uploaded_to_bucket" not in st.session_state:
     st.session_state.uploaded_to_bucket = False
@@ -978,7 +982,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
 
 if not st.session_state.uploaded_to_bucket:
-    upload_to_bucket("phy_assistant_bucket",log_file,user_id=st.session_state.user_id)
+    upload_to_bucket("phy_assistant_bucket",st.session_state.log_buffer.getvalue(),user_id=st.session_state.user_id)
     st.session_state.uploaded_to_bucket = True
 
 
