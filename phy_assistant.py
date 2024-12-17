@@ -40,6 +40,7 @@ NEO4J_USERNAME = "neo4j"
 NEO4J_PASSWORD = st.secrets["NEO4J_KEY"]
 #NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
 neo4j_url = "neo4j+s://e8df9493.databases.neo4j.io"
+project_id = st.secrets["GOOGLE_PROJECT_ID"]
 
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
 with GraphDatabase.driver(neo4j_url, auth=AUTH) as driver:
@@ -57,7 +58,7 @@ if "user_id" not in st.session_state:
 
 
 def upload_to_bucket(bucket_name,log_data,user_id):
-    client = storage.Client(project="Logging experiment")
+    client = storage.Client(project=project_id)
     bucket = client.bucket(bucket_name)
     blob_name = f"logs/user_{user_id}.log"
     blob = bucket.blob(blob_name)
