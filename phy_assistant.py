@@ -5,7 +5,7 @@ import openai
 import time
 import random
 import streamlit as st
-from google_cloud import storage
+from google.cloud import storage
 import uuid
 from uuid_shortener import UUIDShortener
 import logging
