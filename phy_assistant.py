@@ -56,7 +56,7 @@ if "user_id" not in st.session_state:
 log_file = f"logs/user_{st.session_state.user_id}.log"
 
 if not os.path.exists("logs"):
-    os.makedir("logs")
+    os.makedirs("logs")
 
 with open(log_file,"a") as f:
     f.write("This is the new log entry from Github!")
