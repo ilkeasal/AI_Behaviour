@@ -5,8 +5,13 @@ import openai
 import time
 import random
 import streamlit as st
+from google_cloud import storage
+import uuid
+from uuid_shortener import UUIDShortener
+import logging
 
 openai.api_key= st.secrets["OPENAI_KEY"]
+GOOGLE_APPLICATION_CREDENTIALS = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
 #load_dotenv(".env")
 #openai.api_key = os.getenv("OPENAI_KEY")
 #openai.api_key = os.environ["OPENAI_KEY"]
@@ -44,6 +49,43 @@ session = driver.session()
 
 graph = Neo4jGraph(url=neo4j_url, username=NEO4J_USERNAME, password=NEO4J_PASSWORD)
 
+
+if "user_id" not in st.session_state:
+    st.session_state.user_id = UUIDShortener.encode(str(uuid.uuid4()))
+
+log_file = f"logs/user_{st.session_state.user_id}.log"
+
+if not os.path.exists("logs"):
+    os.makedir("logs")
+
+with open(log_file,"a") as f:
+    f.write("This is the new log entry from Github!")
+
+# Set up Logger :
+
+logger = logging.getLogger("local_test_logger")
+logger.setLevel(logging.DEBUG)
+
+# FileHandler to write logs to the log file:
+file_handler = logging.FileHandler(log_file)
+file_handler.setLevel(logging.DEBUG)
+
+# Defining a log format :
+formatter = logging.Formatter("%(asctime)s -%s(levelname)s -%(message)s")
+file_handler.setFormatter(formatter)
+
+# Add handler to logger
+
+if not logger.handlers:
+    logger.addHandler(file_handler)
+
+# Google cloud storage setup :
+
+def upload_to_bucket(bucket_name,source_file,user_id):
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob_name = f"logs/user_{user_id}.log"
+    blob.upload_from_filename(source_file)
 
 def variable_nodes_names():
     result1 = session.run("MATCH(n:VARIABLE) RETURN n.name")
@@ -930,7 +972,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
 
 
-
+upload_to_bucket("phy_assistant_bucket",log_file,user_id=st.session_state.user_id)
 #
 
 
