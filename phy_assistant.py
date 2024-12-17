@@ -85,10 +85,11 @@ def upload_to_bucket(bucket_name,source_file,user_id):
     client = storage.Client()
     bucket = client.bucket(bucket_name)
     blob_name = f"logs/user_{user_id}.log"
+    blob = bucket.blob(blob_name)
     blob.upload_from_filename(source_file)
 
 if "uploaded_to_bucket" not in st.session_state:
-    st.session_state.upladed_to_bucket = False
+    st.session_state.uploaded_to_bucket = False
 
 st.session_state.uploaded_to_bucket = False
 
