@@ -87,6 +87,11 @@ def upload_to_bucket(bucket_name,source_file,user_id):
     blob_name = f"logs/user_{user_id}.log"
     blob.upload_from_filename(source_file)
 
+if "uploaded_to_bucket" not in st.session_state:
+    st.session_state.upladed_to_bucket = False
+
+st.session_state.uploaded_to_bucket = False
+
 def variable_nodes_names():
     result1 = session.run("MATCH(n:VARIABLE) RETURN n.name")
     result1_value = (result1.values())
@@ -971,9 +976,10 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
 
 
+if not st.session_state.uploaded_to_bucket:
+    upload_to_bucket("phy_assistant_bucket",log_file,user_id=st.session_state.user_id)
+    st.session_state.uploaded_to_bucket = True
 
-#upload_to_bucket("phy_assistant_bucket",log_file,user_id=st.session_state.user_id)
-#
 
 
 
