@@ -49,10 +49,10 @@ logger = logging.getLogger(__name__) # DELETE THIS
 
 if "GOOGLE_PROJECT_ID" not in st.secrets:
     st.write("Google cloud credentials are missing")
-    st.debug("DEBUG : Google cloud credentials are missing")
+    logger.debug("DEBUG : Google cloud credentials are missing")
 else:
     st.write("Google cloud credentials are NOT missing")
-    st.debug("DEBUG : Google cloud credentials are NOT missing")
+    logger.debug("DEBUG : Google cloud credentials are NOT missing")
 
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
 with GraphDatabase.driver(neo4j_url, auth=AUTH) as driver:
