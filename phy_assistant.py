@@ -995,7 +995,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
 if not st.session_state.uploaded_to_bucket:
     upload_to_bucket("phy_assistant_bucket",st.session_state.log_buffer.getvalue(),user_id=st.session_state.user_id)
-    st.session_state.uploaded_to_bucket = True
+    
     
 
 
