@@ -511,7 +511,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
     )
     construct_prompt = completion.choices[0].message.content
     construct_prompt = construct_prompt.lower()
-    st.session_state.log_buffer.write(f"Decided concept {construct_prompt}\n")
+    
 
     # stop_button = st.button("Stop the conversation.")
 
@@ -572,7 +572,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
     print(f"This is the construct prompt : {construct_prompt}")
     print(f"This is the construct name level : {construct_name_level}")
-    st.session_state.log_buffer.write(f"LEVEL OF THE CONCEPT : {construct_name_level}\n")
+    st.session_state.log_buffer.write(f"LEVEL OF CONCEPT : {construct_name_level}\n")
 
     if len(chat_history)>25:
         chat_history = chat_history[10:]
