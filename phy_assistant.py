@@ -43,16 +43,14 @@ neo4j_url = "neo4j+s://e8df9493.databases.neo4j.io"
 project_id = st.secrets["GOOGLE_PROJECT_ID"]
 #project_id = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]["project_id"]
 
-logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger(__name__) # DELETE THIS
 
 
 if "GOOGLE_PROJECT_ID" not in st.secrets:
     st.write("Google cloud credentials are missing")
-    logger.debug("DEBUG : Google cloud credentials are missing")
+    
 else:
     st.write("Google cloud credentials are NOT missing")
-    logger.debug("DEBUG : Google cloud credentials are NOT missing")
+    
 
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
 with GraphDatabase.driver(neo4j_url, auth=AUTH) as driver:
@@ -81,7 +79,7 @@ if "log_buffer" not in st.session_state:
     st.session_state.log_buffer = StringIO()
 
 # adding new log entries
-st.session_state.log_buffer("This is a new log entry from the chatbot!\n")
+st.session_state.log_buffer.write("This is a new log entry from the chatbot!\n")
 
 
 # Set up Logger :
@@ -997,6 +995,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 if not st.session_state.uploaded_to_bucket:
     upload_to_bucket("phy_assistant_bucket",st.session_state.log_buffer.getvalue(),user_id=st.session_state.user_id)
     st.session_state.uploaded_to_bucket = True
+    st.success("Logs uploaded successfully!")
 
 
 
