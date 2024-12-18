@@ -41,7 +41,18 @@ NEO4J_PASSWORD = st.secrets["NEO4J_KEY"]
 #NEO4J_PASSWORD = os.environ["NEO4J_PASSWORD"]
 neo4j_url = "neo4j+s://e8df9493.databases.neo4j.io"
 project_id = st.secrets["GOOGLE_PROJECT_ID"]
-st.write(f"Project_id is {project_id}")
+#project_id = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]["project_id"]
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__) # DELETE THIS
+
+
+if "GOOGLE_PROJECT_ID" not in st.secrets:
+    st.write("Google cloud credentials are missing")
+    st.debug("DEBUG : Google cloud credentials are missing")
+else:
+    st.write("Google cloud credentials are NOT missing")
+    st.debug("DEBUG : Google cloud credentials are NOT missing")
 
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
 with GraphDatabase.driver(neo4j_url, auth=AUTH) as driver:
@@ -131,7 +142,7 @@ variables = ["coping strategies", "self-efficacy", "intentions", "habit strength
              "social support family", "mood", "self monitoring", "action planning", "attitude", "social norms"]
 
 
-memory = ConversationBufferMemory(return_messages=True)
+#memory = ConversationBufferMemory(return_messages=True)
 
 
 def stop_or_continue(a_dict):  # This is not necessary right now.
