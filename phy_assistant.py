@@ -256,17 +256,18 @@ def assess_concepts_prompt(concept_name,user_prompt,chat_history):
             "content":formatted_prompt
         }]
     )
-
+    st.session_state.log_buffer.write(f"ASSESS CONCEPTS PROMPT : {formatted_prompt}\n")
     response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
+        st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 def give_advice_prompt(main_problem,user_prompt,chat_history):
     """Give advice with openai + formatted prompt"""
     formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice that to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly.  Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
-    print(f"Give advice prompt : {formatted_prompt}")
+    st.session_state.log_buffer.write(f"GIVE ADVICE PROMPT : {formatted_prompt}\n")
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[{
@@ -277,6 +278,7 @@ def give_advice_prompt(main_problem,user_prompt,chat_history):
     response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
+        st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 
@@ -349,7 +351,7 @@ def give_advice_users_level(give_advice_sentences):
     """Give advice sentence with openai + formatted prompt"""
     combined_input = "In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly."
     formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way. Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. {give_advice_sentences}.Based on this information, user's input : {user_prompt}, and chat history: {chat_history} offer advice to help the user become more physically active.{combined_input}. Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening. Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
-    print(f"Give advice users level Prompt : {formatted_prompt}")
+    st.session_state.log_buffer.write(f"GIVE ADVICE USERS LEVEL PROMPT : {formatted_prompt}\n")
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages =[
@@ -362,6 +364,7 @@ def give_advice_users_level(give_advice_sentences):
     response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
+        st.session_state.log_buffer.write(f"ASSISTANT ADVICE : {response}\n")
         st.session_state.messages.append({"role": "assistant", "content": response})
     
 
@@ -369,7 +372,7 @@ def clarification_question(last_asked_concept,chat_history):
     assistant_answer = " ".join(chat_history[-2])
     user_answer = " ".join(chat_history[-1])
     formatted_prompt = f"""The user's response '{user_answer}' did not appropriately answer the question '{assistant_answer}'. Acknowledge the user's response naturally and empathetically. If the users' input includes a question or request for clarification, address it directly. Then seamlessly transition to rephrasing and simplifying the original question to steer the conversation back to the concept '{last_asked_concept}'. {last_asked_concept} {concept_definitions_dict[last_asked_concept]}. Ensure that you only ask one revised question and that question is direct and neutral and aims to understand user's current behaviour or thoughts about {last_asked_concept} while flowing naturally from the acknowledgement. Your output should be concise, with a smooth transition and a revised question. Take the chat history into account {chat_history} so that you do not repeat yourself. It is very important that you do not ask the same question word-by-word. Do not include any explanations, reflections, or commentary about the purpose or structure of your response."""
-    print(f"Clarification question Prompt : {formatted_prompt}")
+    st.session_state.log_buffer.write(f"CLARIFICATION QUESTION PROMPT : {formatted_prompt}\n")
     completion = client.chat.completions.create(
         model = "gpt-4o-mini",
         messages = [
@@ -382,6 +385,7 @@ def clarification_question(last_asked_concept,chat_history):
     response = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(response))
+        st.session_state.log_buffer.write(f"ASSISTANT RESPONSE: {response}\n")
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 def validation_question(last_asked_concept,chat_history):
@@ -390,13 +394,14 @@ def validation_question(last_asked_concept,chat_history):
     user_answer = " ".join(chat_history[-1])
     validation_question = (
         f"Does the user's response '{user_answer}' appropriately answer the question asked by the assistant '{assistant_answer}' to assess the users' level on {last_asked_concept}? {last_asked_concept} {concept_definitions_dict[last_asked_concept]} If the user's response provides clear and relevant information about their behaviours, attitudes, or practices related to  {last_asked_concept}, treat it as sufficient to evaluate their level. This includes explicit affirmations or denials (e.g., 'Yes, I do.' or 'No, I don't'), or responses that, while not explicit, clearly imply the user's level of engagement with {last_asked_concept}. For example, a response that describes consistent or inconsistent behaviours directly tied to {last_asked_concept} can be enough to make an assessment. If the user's response provides enough information to evaluate their level on {last_asked_concept}, return 'yes' and provide a brief explanation of why it is sufficient. If the user's response does not address the concept or is too vague to make an assessment, return 'no' and provide a brief explanation of what is missing.")
-    print(f"Validation question Prompt: {validation_question}")
+    st.session_state.log_buffer.write(f"VALIDATION QUESTION PROMPT : {validation_question}\n")
     completion = client.chat.completions.create(model="gpt-4o-mini", messages=[
         {"role": "assistant",
          "content": validation_question}
     ])
     evaluation = completion.choices[0].message.content
     response = evaluation.lower()
+    st.session_state.log_buffer.write(f"The answer of the GPT4o-mini in response to the validation question : {response}\n")
     return response
 
 def level_check_after_validation(user_answer,last_asked_concept):
@@ -412,6 +417,7 @@ def level_check_after_validation(user_answer,last_asked_concept):
                                                 )
     level = (completion.choices[
                  0].message.content).lower()  # should return either "Low {last_asked_concept} or High {last_asked_concept}
+    st.session_state.log_buffer.write(f"After the validation, the decided level of the user is {level}\n")
     return level
 
 
@@ -497,7 +503,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
     )
     construct_prompt = completion.choices[0].message.content
     construct_prompt = construct_prompt.lower()
-    print(construct_prompt)
+    st.session_state.log_buffer.write(f"Decided concept {construct_prompt}\n")
 
     # stop_button = st.button("Stop the conversation.")
 
@@ -558,6 +564,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
     print(f"This is the construct prompt : {construct_prompt}")
     print(f"This is the construct name level : {construct_name_level}")
+    st.session_state.log_buffer.write(f"CONSTRUCT NAME LEVEL : {construct_name_level}\n")
 
     if len(chat_history)>25:
         chat_history = chat_history[10:]
@@ -568,21 +575,27 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
             st.session_state.all_concepts[st.session_state.last_asked_concept]+=1
             print(f"We do not need to validate because {construct_prompt}=={st.session_state.last_asked_concept}")
             print(f"All concepts:  {st.session_state.all_concepts}")
+            st.session_state.log_buffer.write(f"We do not need to validate because {construct_prompt}=={st.session_state.last_asked_concept}\n")
+            st.session_state.log_buffer.write(f"All concepts:  {st.session_state.all_concepts}\n")
             st.session_state.validation_repeat = 0
             st.session_state.question_validation = False
             # is_it_key(concept_name=st.session_state.last_asked_concept,unstable_concept_dict=st.session_state.unstable_concept_dict) #here we turn on the key.
 
             if st.session_state.its_key: # if what we are validating is a key
                 print("What we have just validated was a key.")
+                st.session_state.log_buffer.write("What we have just validated was a key.\n")
+                
                 if "Low" in construct_name_level:
                     st.session_state.users_level[st.session_state.last_asked_concept]["status"]="Low"
                     print(st.session_state.users_level)
+                    st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                     if st.session_state.unstable_concept_dict[st.session_state.last_asked_concept]: # if there are questions to ask about dependencies:
                         st.session_state.its_key = False
                         random_chosen_concept = random.choice(st.session_state.unstable_concept_dict[st.session_state.last_asked_concept])
                         st.session_state.value = random_chosen_concept # maybe we don't even need this and we can just use last_asked_concept ?
                         st.session_state.last_asked_concept = random_chosen_concept
                         print(f"The value for the {st.session_state.last_asked_key} was low and it has dependencies. The chosen dependency to ask a question about is {st.session_state.last_asked_concept} ")
+                        st.session_state.log_buffer.write(f"The value for the {st.session_state.last_asked_key} was low and it has dependencies. The chosen dependency to ask a question about is {st.session_state.last_asked_concept}\n")
                         assess_concepts_prompt(concept_name=st.session_state.last_asked_concept,user_prompt=user_prompt,chat_history=chat_history)
                         st.session_state.question_validation = True
 
@@ -604,6 +617,8 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                             filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                             sentence = give_advice_sent(filtered_dict)
                             print(f"The sentence is :  {sentence}")
+                            st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
+                            st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}")
                             print(st.session_state.users_level)
                             give_advice_users_level(sentence)
                             st.session_state.unstable_concept_dict = {}
@@ -620,6 +635,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                     st.session_state.users_level[st.session_state.last_asked_concept]["status"]="High"
                     del st.session_state.unstable_concept_dict[st.session_state.last_asked_concept]
                     print(st.session_state.users_level)
+                    st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                     # I need to praise then ask a question if there are still things to ask a question about. If not, I need to give advice.
                     if st.session_state.unstable_concept_dict: #if there are still things to ask a question about.
                         st.session_state.last_asked_key = next(iter(st.session_state.unstable_concept_dict))
@@ -633,6 +649,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                         filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                         sentence = give_advice_sent(filtered_dict)
                         print(f"The sentence is :  {sentence}")
+                        st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                         print(st.session_state.users_level)
                         give_advice_users_level(sentence)
                         st.session_state.unstable_concept_dict = {}
@@ -643,15 +660,19 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
             else: # if we are validating a value
                 print("What we have just validated is a value")
+                st.session_state.log_buffer.write("What we have just validated is a value!\n")
                 if "Low" in construct_name_level:
                     st.session_state.users_level[st.session_state.last_asked_key]["dependencies"][st.session_state.last_asked_concept]["status"] ="Low"
                     st.session_state.unstable_concept_dict[st.session_state.last_asked_key].remove(st.session_state.last_asked_concept)
                     # st.session_state.all_concepts[st.session_state.last_asked_concept] += 1
                     print(st.session_state.users_level)
+                    st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                     # check if there are still other dependencies
                     if st.session_state.unstable_concept_dict[st.session_state.last_asked_key]: #if there are other dependencies to ask a q about.
                         random_chosen_concept = random.choice(st.session_state.unstable_concept_dict[st.session_state.last_asked_key])
                         print(f"We are validating a value and the chosen value is : {random_chosen_concept}")
+                        st.session_state.log_buffer.write(f"We are validating a value and the chosen value is : {random_chosen_concept}\n")
+                        
                         st.session_state.its_key = False
                         st.session_state.last_asked_concept = random_chosen_concept
                         st.session_state.question_validation = True
@@ -669,6 +690,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                             st.session_state.its_key = True
                             st.session_state.question_validation = True
                             print(f"The next key to ask a question about is {st.session_state.last_asked_key} ")
+                            st.session_state.log_buffer.write(f"The next key to ask a question about is {st.session_state.last_asked_key} \n")
                             assess_concepts_prompt(concept_name=st.session_state.last_asked_key,user_prompt=user_prompt,chat_history=chat_history)
 
 
@@ -677,7 +699,9 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                             filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                             sentence = give_advice_sent(filtered_dict)
                             print(f"The sentence is :  {sentence}")
+                            st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                             print(st.session_state.users_level)
+                            st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                             give_advice_users_level(sentence)
                             st.session_state.unstable_concept_dict = {}
                             st.session_state.users_level = {}
@@ -717,7 +741,9 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                             filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                             sentence = give_advice_sent(filtered_dict)
                             print(f"The sentence is :  {sentence}")
+                            st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                             print(st.session_state.users_level)
+                            st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                             give_advice_users_level(sentence)
                             st.session_state.unstable_concept_dict = {}
                             st.session_state.users_level = {}
@@ -726,24 +752,31 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
 
         else: # if construct_prompt != last_asked_concept :
             print("Validation in progress...")
+            st.session_state.log_buffer.write("Validation in progress..\n")
             print(f"{construct_prompt} is not equal to {st.session_state.last_asked_concept}")
+            st.session_state.log_buffer.write(f"{construct_prompt} is not equal to {st.session_state.last_asked_concept}\n")
             st.session_state.validation_repeat+=1
             print(f"Validation repeat: {st.session_state.validation_repeat}")
+            st.session_state.log_buffer.write(f"Validation repeat: {st.session_state.validation_repeat}\n")
             if st.session_state.validation_repeat<3:
                 response = validation_question(last_asked_concept=st.session_state.last_asked_concept,chat_history=chat_history)
                 print(response)
                 if "yes" in response:
                     st.session_state.all_concepts[st.session_state.last_asked_concept] +=1
                     print(f"All concepts : {st.session_state.all_concepts}")
+                    st.session_state.log_buffer.write(f"All concepts : {st.session_state.all_concepts}\n")
                     st.session_state.question_validation = False
                     st.session_state.validation_repeat = 0
                     print("Question-answer is validated!")
+                    st.session_state.log_buffer.write("Question-answer is validated!\n")
                     level = level_check_after_validation(user_answer=chat_history[-1],last_asked_concept=st.session_state.last_asked_concept)
                     print(f"After the evaluation the level of the user on the concept is : {level}")
+                    st.session_state.log_buffer.write(f"After the evaluation the level of the user on the concept is : {level}\n")
                     if "low" in level:
                         if st.session_state.its_key: # if what we have validated was a key.
                             st.session_state.users_level[st.session_state.last_asked_concept]["status"]="Low"
                             print(f"Low was in the concept, users level are {st.session_state.users_level}")
+                            st.session_state.log_buffer.write(f"Low was in the concept, users level are {st.session_state.users_level}\n")
                             if st.session_state.unstable_concept_dict[st.session_state.last_asked_concept]: #if the key has dependencies
                                 # ask a question about the dependencies.
                                 st.session_state.its_key = False
@@ -768,7 +801,9 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                                     filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                                     sentence = give_advice_sent(filtered_dict)
                                     print(f"The sentence is :  {sentence}")
+                                    st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                                     print(st.session_state.users_level)
+                                    st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                                     give_advice_users_level(sentence)
                                     st.session_state.unstable_concept_dict = {}
                                     st.session_state.users_level = {}
@@ -813,6 +848,7 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                     else: #if "high" in level
                         if st.session_state.its_key:
                             print(f"We have validated a key and it has a high level! : {level}")
+                            st.session_state.log_buffer.write(f"We have validated a key and it has a high level! : {level}\n")
                             st.session_state.users_level[st.session_state.last_asked_concept]["status"] = "High"
                             del st.session_state.unstable_concept_dict[st.session_state.last_asked_concept]
                             if st.session_state.unstable_concept_dict: # if there are other keys to ask a q about.
@@ -826,8 +862,10 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                                 st.session_state.question_validation = False
                                 filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                                 sentence = give_advice_sent(filtered_dict)
+                                st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                                 print(f"The sentence is :  {sentence}")
                                 print(st.session_state.users_level)
+                                st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}")
                                 give_advice_users_level(sentence)
                                 st.session_state.unstable_concept_dict = {}
                                 st.session_state.users_level = {}
