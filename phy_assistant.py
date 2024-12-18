@@ -10,6 +10,7 @@ import uuid
 from uuid_shortener import UUIDShortener
 import logging
 from io import StringIO
+from google.oauth2 import service_account
 
 openai.api_key= st.secrets["OPENAI_KEY"]
 GOOGLE_APPLICATION_CREDENTIALS = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
@@ -31,7 +32,7 @@ from neo4j import GraphDatabase
 
 
 st.title(" Your Favorite Physical Health Assistant :rocket:")
-
+credentials = service_account.Credentials.from_service_account_info(GOOGLE_APPLICATION_CREDENTIALS)
 ## Neo4j :
 
 ###########
@@ -68,7 +69,7 @@ if "user_id" not in st.session_state:
 
 
 def upload_to_bucket(bucket_name,log_data,user_id):
-    client = storage.Client(project=project_id)
+    client = storage.Client(credentials = credentials, project=project_id)
     bucket = client.bucket(bucket_name)
     blob_name = f"logs/user_{user_id}.log"
     blob = bucket.blob(blob_name)
