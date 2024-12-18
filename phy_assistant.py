@@ -985,7 +985,11 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                             filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                             sentence = give_advice_sent(filtered_dict)
                             print(f"The sentence is :  {sentence}")
+                            st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                             print(st.session_state.users_level)
+                            st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
+                            st.session_state.log_buffer.write("\n")
+                            
                             give_advice_users_level(sentence)
                             st.session_state.unstable_concept_dict = {}
                             st.session_state.users_level = {}
@@ -1004,6 +1008,8 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                         st.session_state.question_validation = True
                         # st.session_state.all_concepts[st.session_state.last_asked_concept] += 1
                         print(f"Previous value is removed new chosen value is : {st.session_state.last_asked_concept}")
+                        st.session_state.log_buffer.write(f"Previous value is removed new chosen value is : {st.session_state.last_asked_concept}")
+                        st.session_state.log_buffer.write("\n")
                         assess_concepts_prompt(concept_name=st.session_state.last_asked_concept,user_prompt=user_prompt,chat_history=chat_history)
 
                     else: # if there are no other dependencies to ask a q about.
@@ -1021,6 +1027,9 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                             filtered_dict = filter_low_dependencies_as_list(st.session_state.users_level)
                             sentence = give_advice_sent(filtered_dict)
                             print(f"The sentence is :  {sentence}")
+                            st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
+                            st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
+                            st.session_state.log_buffer.write("\n")
                             print(st.session_state.users_level)
                             give_advice_users_level(sentence)
                             st.session_state.unstable_concept_dict = {}
@@ -1035,17 +1044,24 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                 assess_concepts_prompt(lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
                 # st.session_state.all_concepts[lowest_concept]+=1
                 print(f"Concept level : {st.session_state.all_concepts}")
+                st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                st.session_state.log_buffer.write("\n")
 
             else: #If concept level equals to one of the concepts.
                 print(f"The identified concept is {concept_level}")
                 if "Low" in construct_name_level:
                     st.session_state.main_problem_concept = concept_level
                     st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
+                    st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                     print(f"All concepts: {st.session_state.all_concepts}")
                     st.session_state.unstable_concept_dict = retrieve_concepts(st.session_state.main_problem_concept)
                     print(f"The unstable concept dictionary is {st.session_state.unstable_concept_dict}")
+                    st.session_state.log_buffer.write(f"UNSTABLE CONCEPT DICTIONARY : {st.session_state.unstable_concept_dict}\n")
+                    st.session_state.log_buffer.write("\n")
                     if not st.session_state.unstable_concept_dict: #if the dictionary is empty, do not even create users_level and just give advice then empty the unstable concept dict
                         print("The dictionary was empty. Hence we don't need to create a users level dict. So we will give advice!")
+                        st.session_state.log_buffer.write("The dictionary was empty. Hence we don't need to create a users level dict. So we will give advice!\n")
+                        st.session_state.log_buffer.write("\n")
                         give_advice_prompt(main_problem=st.session_state.main_problem_concept,user_prompt=user_prompt,chat_history=chat_history)
                         st.session_state.unstable_concept_dict = {}
                         if stop_or_continue(st.session_state.all_concepts)>3:
@@ -1053,10 +1069,12 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                     else: #If the dictionary is not empty and hence there are has_effect_relations to further ask a question about.
                         st.session_state.users_level = initialize_users_level_dict(st.session_state.unstable_concept_dict)
                         print(f"The users level dictionary : {st.session_state.users_level}")
+                        st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                         #Now ask a question about the first key in that dictionary.
                         st.session_state.last_asked_key = next(iter(st.session_state.unstable_concept_dict))
                         st.session_state.its_key = True
                         print(f"First key/concept to ask a question about is {st.session_state.last_asked_key}")
+                        st.session_state.log_buffer.write(f"First key/concept to ask a question about is {st.session_state.last_asked_key}\n")
                         # st.session_state.all_concepts[st.session_state.last_asked_key] += 1
                         st.session_state.last_asked_concept = st.session_state.last_asked_key
                         st.session_state.question_validation = True
@@ -1065,8 +1083,11 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                 else: #if "High" in construct name level
                     st.session_state.main_problem_concept = concept_level
                     st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
+                    st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                     print(f"All concepts : {st.session_state.all_concepts}")
                     print(f"The user had a high value for the concept {st.session_state.main_problem_concept}")
+                    st.session_state.log_buffer.write(f"The user had a high value for the concept {st.session_state.main_problem_concept}\n")
+                    st.session_state.log_buffer.write("\n")
                     lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
                     assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                     # st.session_state.all_concepts[lowest_concept] += 1
