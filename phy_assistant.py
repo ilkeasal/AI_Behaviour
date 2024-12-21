@@ -439,7 +439,7 @@ def stop_or_continue(a_dict):
 ## Streamlit Initialization
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role":"assistant","content":"Hi! How are you? Feel free to ask me anything about physical activity or start the conversation!"}]
+    st.session_state["messages"] = [{"role":"assistant","content":"Hi!🤗 What's your experience with staying active? Is there anything you'd like to explore or talk about?"}]
 
 if "unstable_concept_dict" not in st.session_state:
     st.session_state.unstable_concept_dict = {}
