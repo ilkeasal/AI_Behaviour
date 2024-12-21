@@ -1138,11 +1138,15 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                         assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                         st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                         st.session_state.log_buffer.write("\n")
+                        if stop_or_continue(st.session_state.all_concepts)>3:
+                            stop_button = st.button("Stop the conversation.", on_click=stop_button)
                     else:
                         assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                         st.session_state.asked_concepts.append(lowest_concept)
                         st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                         st.session_state.log_buffer.write("\n")
+                        if stop_or_continue(st.session_state.all_concepts)>3:
+                            stop_button = st.button("Stop the conversation.", on_click=stop_button)
                         
                     
 
