@@ -476,6 +476,9 @@ if "validation_repeat" not in st.session_state:
 if "active_conversation" not in st.session_state:
     st.session_state.active_conversation = True
 
+if "asked_concepts" not in st.session_state:
+    st.session_state.asked_concepts = []
+
 
 for message in st.session_state["messages"]:
     with st.chat_message(message["role"]):
@@ -1062,11 +1065,26 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
     else: # if question validation is not necessary
             if concept_level == "No concept":
                 lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
-                assess_concepts_prompt(lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
-                # st.session_state.all_concepts[lowest_concept]+=1
-                print(f"Concept level : {st.session_state.all_concepts}")
-                st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
-                st.session_state.log_buffer.write("\n")
+                st.session_state.log_buffer.write(f"Chosen lowest concept : {lowest_concept}\n")
+                if st.session_state.asked_concepts.count(lowest_concept)>2:
+                    st.session_state.all_concepts[lowest_concept]+=1
+                    st.session_state.log_buffer.write(f"Previous asked concepts : {st.session_state.asked_concepts}\n")
+                    st.session_state.asked_concepts = [i for i in st.session_state.asked_concepts if i!=lowest_concept]
+                    st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
+                    lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                    st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
+                    st.session_state.asked_concepts.append(lowest_concept)
+                    assess_concepts_prompt(lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
+                    # st.session_state.all_concepts[lowest_concept]+=1
+                    print(f"Concept level : {st.session_state.all_concepts}")
+                    st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                    st.session_state.log_buffer.write("\n")
+                else:
+                    assess_concepts_prompt(lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
+                    st.session_state.asked_concepts.append(lowest_concept)
+                    st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                    st.session_state.log_buffer.write("\n")
+                    
 
             else: #If concept level equals to one of the concepts.
                 print(f"The identified concept is {concept_level}")
@@ -1109,10 +1127,24 @@ if user_prompt:= st.chat_input("Want to share some thoughts?"):
                     print(f"The user had a high value for the concept {st.session_state.main_problem_concept}")
                     st.session_state.log_buffer.write(f"The user had a high value for the concept {st.session_state.main_problem_concept}\n")
                     lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
-                    assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
-                    st.session_state.log_buffer.write("\n")
-                    # st.session_state.all_concepts[lowest_concept] += 1
-                    # print(f"Concept level : {st.session_state.all_concepts}")
+                    if st.session_state.asked_concepts.count(lowest_concept)>2:
+                        st.session_state.all_concepts[lowest_concept]+=1
+                        st.session_state.log_buffer.write(f"Previous asked concepts : {st.session_state.asked_concepts}\n")
+                        st.session_state.asked_concepts = [i for i in st.session_state.asked_concepts if i!=lowest_concept]
+                        st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
+                        lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                        st.session_state.asked_concepts.append(lowest_concept)
+                        st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
+                        assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                        st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                        st.session_state.log_buffer.write("\n")
+                    else:
+                        assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                        st.session_state.asked_concepts.append(lowest_concept)
+                        st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                        st.session_state.log_buffer.write("\n")
+                        
+                    
 
 
 
