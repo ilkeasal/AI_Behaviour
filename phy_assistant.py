@@ -419,6 +419,7 @@ def level_check_after_validation(user_answer, last_asked_concept):
 
 
 def stop_button():
+    st.balloons()
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     st.markdown(
         " ## **Thank you for participating in this experiment! We hope that you enjoyed your conversation with our chatbot!**")
@@ -442,6 +443,7 @@ def submit_submit_function():
     st.session_state.log_buffer.write(f"Hours input : {hours_input}\n")
     st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
     st.session_state.log_buffer.write(f"\n")
+    st.balloons()
 
 ## Streamlit Initialization
 
