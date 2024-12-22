@@ -419,9 +419,9 @@ def level_check_after_validation(user_answer, last_asked_concept):
 
 
 def stop_button():
+    st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     st.markdown(
         " ## **Thank you for participating in this experiment! We hope that you enjoyed your conversation with our chatbot!**")
-    st.session_state.log_buffer.write("STOP BUTTON PRESSED")
     st.stop()
 
 
