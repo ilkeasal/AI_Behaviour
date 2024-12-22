@@ -437,6 +437,11 @@ def stop_or_continue(a_dict):
 
 def submit_submit_function():
     st.session_state.start_experiment = True
+    st.session_state.log_buffer.write("PHY ASSESSMENT!")
+    st.session_state.log_buffer.write(f"Days input : {days_input}\n")
+    st.session_state.log_buffer.write(f"Hours input : {hours_input}\n")
+    st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
+    st.session_state.log_buffer.write(f"\n")
 
 ## Streamlit Initialization
 
