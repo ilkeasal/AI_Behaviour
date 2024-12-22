@@ -661,7 +661,7 @@ if st.session_state.start_experiment:
                                 print(f"The sentence is :  {sentence}")
                                 st.session_state.log_buffer.write(f"The sentence is :  {sentence}\n")
                                 st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
-                                st.session_state.log_bufffer.write("\n")
+                                st.session_state.log_buffer.write("\n")
                                 print(st.session_state.users_level)
                                 give_advice_users_level(sentence)
                                 st.session_state.unstable_concept_dict = {}
