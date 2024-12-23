@@ -444,7 +444,7 @@ def submit_submit_function():
     st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
     total_activity_levels = days_input * hours_input
     st.session_state.log_buffer.write(f"Total activity : {total_activity_levels}\n")
-    if total_activity_levels =>150 and strength_input=>2:
+    if total_activity_levels >=150 and strength_input>=2:
         st.session_state.log_buffer.write("ACTIVE\n")
     else:
         st.session_state.log_buffer.write("NOT ACTIVE\n")
