@@ -504,10 +504,10 @@ if not st.session_state.start_experiment:
     #st.write("How often do you use chatbots?")
     options = {
         1:"Never",
-        2:"Rarely",
-        3:"Sometimes",
-        4:"Often",
-        5:"Every day"
+        2:"1-2 times a year",
+        3:"1-2 times a month",
+        4:"1-2 times a week",
+        5:"Daily"
     }
     response = st.radio("How often do you use chatbots? ", options.keys(),index=None,format_func=lambda x:options[x])
     #st.session_state.log_buffer.write(f"Chatbot user experience : {response} \n")
