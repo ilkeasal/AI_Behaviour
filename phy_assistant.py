@@ -501,6 +501,15 @@ if "start_experiment" not in st.session_state:
     st.session_state.start_experiment = False
 
 if not st.session_state.start_experiment:
+    st.write("How often do you use chatbots?")
+    options = {
+        1:"Never",
+        2:"Rarely",
+        3:"Sometimes",
+        4:"Often",
+        5:"Every day"
+    }
+    response = st.radio("Select your answer: ", options.keys(), format_func=lambda x:options[x])
     days_input = st.number_input("On average, how many days per week do you engage in moderate to strenuous exercise?", min_value=0,max_value=7)
     hours_input = st.number_input("On average, how many minutes do you engage in exercise at this level?",min_value=0,max_value=240)
     strength_input = st.number_input("On average, how many days a week do you perform muscle strengthening exercises, such as body weight exercises or resistance training?",min_value=0, max_value=7)
