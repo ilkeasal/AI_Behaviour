@@ -461,8 +461,8 @@ def post_survey_submit():
     st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
     st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
     st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
-    st.markdown(" ## **Thank you for participating!**")
-    st.stop()
+    st.session_state.start_experiment = "stop-experiment"
+    
     
 
 ## Streamlit Initialization
@@ -1306,6 +1306,9 @@ elif st.session_state.start_experiment == "post-survey":
     submit_button = st.button("Submit",on_click=post_survey_submit)
     
     
+elif st.session_state.start_experiment == "stop-experiment":
+    st.markdown(" ## **Thank you for participating!**")
+    st.stop()
 
 
 
