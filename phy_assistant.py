@@ -437,7 +437,7 @@ def stop_or_continue(a_dict):
     return total_num
 
 def submit_submit_function():
-    st.session_state.start_experiment = True
+    st.session_state.start_experiment = "experiment"
     st.session_state.log_buffer.write("PHY ASSESSMENT!\n")
     st.session_state.log_buffer.write(f"Days input : {days_input}\n")
     st.session_state.log_buffer.write(f"Minutes input : {hours_input}\n")
@@ -498,9 +498,9 @@ if "asked_concepts" not in st.session_state:
     st.session_state.asked_concepts = []
 
 if "start_experiment" not in st.session_state:
-    st.session_state.start_experiment = False
+    st.session_state.start_experiment = "pre-survey"
 
-if not st.session_state.start_experiment:
+if st.session_state.start_experiment=="pre-survey":
     #st.write("How often do you use chatbots?")
     age = st.number_input("What is your age?",min_value=18, max_value=64)
     st.session_state.log_buffer.write(f"User age : {age}\n")
@@ -525,7 +525,7 @@ if not st.session_state.start_experiment:
     submit_button = st.button("Submit",on_click=submit_submit_function)
 
 
-if st.session_state.start_experiment:
+if st.session_state.start_experiment == "experiment":
 
     for message in st.session_state["messages"]:
         with st.chat_message(message["role"]):
@@ -1284,6 +1284,12 @@ if st.session_state.start_experiment:
                         st.session_state.log_buffer.write("\n")
                         if stop_or_continue(st.session_state.all_concepts) > 0:
                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
+
+
+elif st.session_state.start_experiment == "post-survey":
+    st.write("Thank you for your participation. Please fill out the form.")
+
+
 
 if not st.session_state.uploaded_to_bucket:
     upload_to_bucket("phy_assistant_bucket", st.session_state.log_buffer.getvalue(), user_id=st.session_state.user_id)
