@@ -426,7 +426,7 @@ def stop_button():
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     st.markdown(
         " ## **Thank you for participating in this experiment! We hope that you enjoyed your conversation with our chatbot!**")
-    st.stop()
+    st.session_state.start_experiment = "post-survey"
 
 
 def stop_or_continue(a_dict):
@@ -1290,7 +1290,7 @@ if st.session_state.start_experiment == "experiment":
 
 
 elif st.session_state.start_experiment == "post-survey":
-    st.write("Thank you for your participation. Please fill out the form.")
+    st.write("To finalize your participation, please complete the short survey below. Providing honest responses is essential to ensure your contributions are accurately reflected in the study\n")
     question1 = survey.select_slider("Q1 : The chatbot personalized the conversation based on my personal information.", options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q1")
     question2 = survey.select_slider("Q2 : I am satisfied with this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
     question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q3")
