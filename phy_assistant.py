@@ -458,7 +458,7 @@ def post_survey_submit():
     st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
     st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
     st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
-    st.markdown(" ## **Thank you for participating! Please wait a moment while the survey loads.**")
+    st.markdown(" ## **Thank you for participating!**")
     st.stop()
     
 
