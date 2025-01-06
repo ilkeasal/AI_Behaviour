@@ -440,7 +440,7 @@ def submit_submit_function():
     st.session_state.start_experiment = True
     st.session_state.log_buffer.write("PHY ASSESSMENT!\n")
     st.session_state.log_buffer.write(f"Days input : {days_input}\n")
-    st.session_state.log_buffer.write(f"Hours input : {hours_input}\n")
+    st.session_state.log_buffer.write(f"Minutes input : {hours_input}\n")
     st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
     total_activity_levels = days_input * hours_input
     st.session_state.log_buffer.write(f"Total activity : {total_activity_levels}\n")
@@ -518,7 +518,7 @@ if not st.session_state.start_experiment:
     strength_input = st.number_input("On average, how many days a week do you perform muscle strengthening exercises, such as body weight exercises or resistance training?",min_value=0, max_value=7)
     st.markdown(f"""
         * Number of days: {days_input}
-        * Number of hours: {hours_input}
+        * Number of minutes: {hours_input}
         * Strength activity: {strength_input}
         """)
     st.session_state.log_buffer.write(f"Chatbot user experience : {response} \n")
