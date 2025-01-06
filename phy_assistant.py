@@ -445,6 +445,9 @@ def submit_submit_function():
     st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
     total_activity_levels = days_input * hours_input
     st.session_state.log_buffer.write(f"Total activity : {total_activity_levels}\n")
+    st.session_state.log_buffer.write(f"Chatbot user experience : {chatbot_use} \n")
+    st.session_state.log_buffer.write(f"User age : {age}\n")
+    st.session_state.log_buffer.write("\n")
     if total_activity_levels >=150 and strength_input>=2:
         st.session_state.log_buffer.write("ACTIVE\n")
     else:
@@ -513,7 +516,6 @@ if "start_experiment" not in st.session_state:
 if st.session_state.start_experiment=="pre-survey":
     #st.write("How often do you use chatbots?")
     age = st.number_input("What is your age?",min_value=18, max_value=64)
-    st.session_state.log_buffer.write(f"User age : {age}\n")
     options = {
         1:"Never",
         2:"1-2 times a year",
@@ -521,7 +523,7 @@ if st.session_state.start_experiment=="pre-survey":
         4:"1-2 times a week",
         5:"Daily"
     }
-    response = st.radio("How often do you use chatbots? ", options.keys(),index=None,format_func=lambda x:options[x])
+    chatbot_use= st.radio("How often do you use chatbots? ", options.keys(),index=None,format_func=lambda x:options[x])
     #st.session_state.log_buffer.write(f"Chatbot user experience : {response} \n")
     days_input = st.number_input("On average, how many days per week do you engage in moderate to strenuous exercise?", min_value=0,max_value=7)
     hours_input = st.number_input("On average, how many minutes do you engage in exercise at this level?",min_value=0,max_value=240)
@@ -531,7 +533,6 @@ if st.session_state.start_experiment=="pre-survey":
         * Number of minutes: {hours_input}
         * Strength activity: {strength_input}
         """)
-    st.session_state.log_buffer.write(f"Chatbot user experience : {response} \n")
     submit_button = st.button("Submit",on_click=submit_submit_function)
 
 
