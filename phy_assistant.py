@@ -1288,6 +1288,17 @@ if st.session_state.start_experiment == "experiment":
 
 elif st.session_state.start_experiment == "post-survey":
     st.write("Thank you for your participation. Please fill out the form.")
+    question1 = survey.select_slider("Q1 : The chatbot personalized the conversation based on my personal information.", options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q1")
+    question2 = survey.select_slider("Q2 : I am satisfied with this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
+    question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q3")
+    question4 = survey.select_slider("Q4 : I would recommend this chatbot to a friend.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q4")
+    st.session_state.log_buffer("Post Survey Results : \n")
+    st.session_state.log_buffer(f"Question 1 answer : {question1}\n")
+    st.session_state.log_buffer(f"Question 2 answer : {question2}\n")
+    st.session_state.log_buffer(f"Question 3 answer : {question3}\n")
+    st.session_state.log_buffer(f"Question 4 answer : {question4}\n")
+    
+    
 
 
 
