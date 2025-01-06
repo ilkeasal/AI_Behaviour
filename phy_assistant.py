@@ -11,6 +11,9 @@ from uuid_shortener import UUIDShortener
 import logging
 from io import StringIO
 from google.oauth2 import service_account
+import streamlit_survey as ss
+
+survey = ss.StreamlitSurvey()
 
 openai.api_key = st.secrets["OPENAI_KEY"]
 GOOGLE_APPLICATION_CREDENTIALS = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
