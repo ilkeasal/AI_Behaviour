@@ -502,6 +502,8 @@ if "start_experiment" not in st.session_state:
 
 if not st.session_state.start_experiment:
     #st.write("How often do you use chatbots?")
+    age = st.number_input("What is your age?",min_value=18, max_value=64)
+    st.session_state.log_buffer.write(f"User age : {age}")
     options = {
         1:"Never",
         2:"1-2 times a year",
