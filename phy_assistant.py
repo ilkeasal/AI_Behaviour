@@ -424,8 +424,6 @@ def level_check_after_validation(user_answer, last_asked_concept):
 def stop_button():
     st.balloons()
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
-    st.markdown(
-        " ## **Thank you for participating! Please wait a moment while the survey loads.**")
     st.session_state.start_experiment = "post-survey"
 
 
@@ -453,6 +451,15 @@ def submit_submit_function():
         st.session_state.log_buffer.write("NOT ACTIVE\n")
         
     st.session_state.log_buffer.write(f"\n")
+
+def post_survey_submit():
+    st.session_state.log_buffer.write("Post Survey Results : \n")
+    st.session_state.log_buffer.write(f"Question 1 answer : {question1}\n")
+    st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
+    st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
+    st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
+    st.markdown(" ## **Thank you for participating! Please wait a moment while the survey loads.**")
+    st.stop()
     
 
 ## Streamlit Initialization
@@ -1295,11 +1302,7 @@ elif st.session_state.start_experiment == "post-survey":
     question2 = survey.select_slider("Q2 : I am satisfied with this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
     question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q3")
     question4 = survey.select_slider("Q4 : I would recommend this chatbot to a friend.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q4")
-    st.session_state.log_buffer.write("Post Survey Results : \n")
-    st.session_state.log_buffer.write(f"Question 1 answer : {question1}\n")
-    st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
-    st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
-    st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
+    submit_button = st.button("Submit",on_click=post_survey_submit)
     
     
 
