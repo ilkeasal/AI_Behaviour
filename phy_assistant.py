@@ -1307,8 +1307,10 @@ elif st.session_state.start_experiment == "post-survey":
     
     
 elif st.session_state.start_experiment == "stop-experiment":
+    st.empty()
+    st.title(" Your Favorite Physical Health Assistant :rocket:")
     st.markdown(" ## **Thank you for participating!**")
-    st.stop()
+    
 
 
 
