@@ -84,7 +84,7 @@ stream_handler = logging.StreamHandler(st.session_state.log_buffer)
 stream_handler.setLevel(logging.DEBUG)
 
 # Defining a log format :
-formatter = logging.Formatter("%(asctime)s -%s(levelname)s -%(message)s")
+formatter = logging.Formatter("%(asctime)s -%(levelname)s -%(message)s")
 stream_handler.setFormatter(formatter)
 
 # Add handler to logger
