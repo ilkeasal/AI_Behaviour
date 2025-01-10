@@ -520,6 +520,9 @@ if "asked_concepts" not in st.session_state:
 if "start_experiment" not in st.session_state:
     st.session_state.start_experiment = "pre-survey"
 
+if "start_time" not in st.session_state:
+    st.session_state.start_time = adjusted_time
+
 if st.session_state.start_experiment=="pre-survey":
     #st.write("How often do you use chatbots?")
     age = st.number_input("What is your age?",min_value=18, max_value=64)
@@ -549,6 +552,9 @@ if st.session_state.start_experiment == "experiment":
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
     
+    st.session_state.log_buffer.write(adjusted_time)
+    st.session_state.log_buffer.write("\n")
+
     
     
     if user_prompt := st.chat_input("Want to share some thoughts?"):
