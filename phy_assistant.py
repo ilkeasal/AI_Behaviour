@@ -13,6 +13,13 @@ from io import StringIO
 from google.oauth2 import service_account
 import streamlit_survey as ss
 
+from datetime import datetime
+
+current_time = datetime.now()
+adjusted_time = current_time.strftime("%d:%m:%y %H:%M")
+
+
+
 survey = ss.StreamlitSurvey()
 
 openai.api_key = st.secrets["OPENAI_KEY"]
