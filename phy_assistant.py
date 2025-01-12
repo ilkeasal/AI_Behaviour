@@ -1262,6 +1262,8 @@ if st.session_state.start_experiment == "experiment":
                                            chat_history=chat_history)
                         st.session_state.unstable_concept_dict = {}
                         if stop_or_continue(st.session_state.all_concepts) > 3:
+                            st.session_state.log_buffer.write(st.session_state.all_concepts) # DELETE AFTERWARDS 
+                            st.session_state.log_buffer.write("\n") # DELETE AFTERWARDS
                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
                     else:  # If the dictionary is not empty and hence there are has_effect_relations to further ask a question about.
                         st.session_state.users_level = initialize_users_level_dict(st.session_state.unstable_concept_dict)
