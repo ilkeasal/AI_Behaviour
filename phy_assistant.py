@@ -468,6 +468,8 @@ def post_survey_submit():
     st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
     st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
     st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
+    st.session_state.log_buffer.write(adjusted_time)
+    st.session_state.log_buffer.write("\n")
     st.session_state.start_experiment = "stop-experiment"
     
     
