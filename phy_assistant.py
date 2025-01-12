@@ -1312,7 +1312,7 @@ if st.session_state.start_experiment == "experiment":
 
 
 elif st.session_state.start_experiment == "post-survey":
-    st.write("To finalize your participation, please complete the short survey below. Providing honest responses is essential to ensure your contributions are accurately reflected in the study\n")
+    st.write("To finalize your participation, please complete the short survey below. Providing honest responses is essential to ensure your contributions are accurately reflected in the study. The scale ranges from strongly disagree to strongly agree, including options disagree, somewhat disagree, neutral, somewhat agree, agree, and strongly agree.\n")
     question1 = survey.select_slider("Q1 : The chatbot personalized the conversation based on my personal information.", options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q1")
     question2 = survey.select_slider("Q2 : I am satisfied with this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
     question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q3")
