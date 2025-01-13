@@ -473,7 +473,7 @@ def post_survey_submit():
     st.session_state.start_experiment = "stop-experiment"
 
 def consent_submit():
-    st.session_state.start_experiment = "consent"
+    st.session_state.start_experiment = "pre-survey"
     
 
 ## Streamlit Initialization
