@@ -528,12 +528,11 @@ if "start_time" not in st.session_state:
     st.session_state.start_time = adjusted_time
 
 if st.session_state.start_experiment =="consent":
-    st.text("""Welcome, and thank you for participating in this experiment. The experiment is divided into three parts. In the first part, you will be asked a few questions about your age, prior
-    experience with chatbots, and physical activity levels. This section will take about 2-3 minutes to complete.\n
-    In the second part, you will engage in a conversation with our chatbot, which is expected to last around 15 minutes. During the conversation, you will have the option to end the session by clicking the 'Stop the conversation' button. 
+    st.text("""Welcome, and thank you for participating in this experiment. This experiment is part of a research project conducted by the AI & Behaviour group at the Vrije Universiteit Amsterdam. It involves interacting with a chatbot in a conversation focused on physical activity. It consists of three parts. 
+    In the first part, you will be asked a few questions about your age, prior experience with chatbots, and physical activity levels. This part will take about 2-3 minutes to complete.\n
+    In the second part, you will engage in a conversation with our chatbot, which is expected to last around 15 minutes. During the conversation, you will have the option to end the session by clicking the 'Stop the conversation' button, which will appear after a while. 
     Once you do so, you will proceed to the final part of the experiment, which consists of four questions aimed at assessing your experience with the chatbot. This last part will take approximately 2-3 minutes.\n
     If you wish to continue the conversation, no action is required-simply keep typing and avoid clicking the 'Stop the conversation' button. This button will be available at certain times, allowing you to end the session whenever you choose during those periods.\n
-    Please take your time to think deeply about the final four questions and answer them honestly. Your genuine feedback is invaluable to us. \n
     When answering the questions in both the first and the final parts of the experiment, you will see the word 'Running' in the top right corner after entering your answer.
     Please wait for this to finish before moving on to the next question. Once you have completed all the questions, click the 'Submit' button to proceed to the next part.\n
     Please also wait for the chatbot's response during the conversation in the second part of the experiment while 'Running' indicator is active. Once the chatbot responds, you can continue the conversation.
