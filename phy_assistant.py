@@ -487,14 +487,13 @@ def advice_because_no_advice():
         "content":f"Based on the chat history : {chat_history}, provide advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
     ])
     generic_advice = completion.choices[0].message.content
-    with st.empty():
-        with st.chat_message("assistant"):
-            response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING
-            st.session_state.log_buffer.write(f"Generic Advice : {response}\n")
-            st.session_state.log_buffer.write(f"ASSISTANT SAID: {response}\n")
-            st.session_state.log_buffer.write("\n")
-            st.session_state.messages.append({"role": "assistant", "content": response})
-            post_survey_button = st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
+    with st.chat_message("assistant"):
+        #response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING
+        st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
+        st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
+        st.session_state.log_buffer.write("\n")
+        st.session_state.messages.append({"role": "assistant", "content": generic_advice})
+        post_survey_button = st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
 
 def post_survey_button_func():
     st.session_state.start_experiment = "post-survey"
@@ -751,7 +750,7 @@ if st.session_state.start_experiment == "experiment":
                                 give_advice_users_level(sentence)
                                 st.session_state.unstable_concept_dict = {}
                                 st.session_state.users_level = {}
-                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                if stop_or_continue(st.session_state.all_concepts) > 0:
                                     stop_button = st.button("Stop the conversation.", on_click=stop_button)
                                 # I am currently not changing st.session_state.its_key to True but maybe I should. Look at it later.
     
@@ -788,7 +787,7 @@ if st.session_state.start_experiment == "experiment":
                             give_advice_users_level(sentence)
                             st.session_state.unstable_concept_dict = {}
                             st.session_state.users_level = {}
-                            if stop_or_continue(st.session_state.all_concepts) > 3:
+                            if stop_or_continue(st.session_state.all_concepts) > 0:
                                 stop_button = st.button("Stop the conversation.", on_click=stop_button)
                         # else: #if there is nothing to ask. It is time to give advice.
     
@@ -855,7 +854,7 @@ if st.session_state.start_experiment == "experiment":
                                 st.session_state.unstable_concept_dict = {}
                                 st.session_state.users_level = {}
                                 st.session_state.its_key = True  # not sure if I should do that.
-                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                if stop_or_continue(st.session_state.all_concepts) > 0:
                                     stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
                     else:  # if 'High' in construct name level :
@@ -911,7 +910,7 @@ if st.session_state.start_experiment == "experiment":
                                 st.session_state.log_buffer.write("\n")
                                 st.session_state.unstable_concept_dict = {}
                                 st.session_state.users_level = {}
-                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                if stop_or_continue(st.session_state.all_concepts) > 0:
                                     stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
             else:  # if construct_prompt != last_asked_concept :
@@ -992,7 +991,7 @@ if st.session_state.start_experiment == "experiment":
                                         st.session_state.unstable_concept_dict = {}
                                         st.session_state.users_level = {}
                                         st.session_state.its_key = True  # not sure if I should do that.
-                                        if stop_or_continue(st.session_state.all_concepts) > 3:
+                                        if stop_or_continue(st.session_state.all_concepts) > 0:
                                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
                             else:  # if what we have validated was a value
@@ -1041,7 +1040,7 @@ if st.session_state.start_experiment == "experiment":
                                         st.session_state.unstable_concept_dict = {}
                                         st.session_state.users_level = {}
                                         st.session_state.its_key = True
-                                        if stop_or_continue(st.session_state.all_concepts) > 3:
+                                        if stop_or_continue(st.session_state.all_concepts) > 0:
                                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
                         else:  # if "high" in level
@@ -1076,7 +1075,7 @@ if st.session_state.start_experiment == "experiment":
                                     st.session_state.unstable_concept_dict = {}
                                     st.session_state.users_level = {}
                                     st.session_state.its_key = True  # not sure about this.
-                                    if stop_or_continue(st.session_state.all_concepts) > 3:
+                                    if stop_or_continue(st.session_state.all_concepts) > 0:
                                         stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
                             else:  # if what we validated with high value was a value and not a key.
@@ -1133,7 +1132,7 @@ if st.session_state.start_experiment == "experiment":
                                         st.session_state.unstable_concept_dict = {}
                                         st.session_state.users_level = {}
                                         st.session_state.its_key = True  # not sure about this.
-                                        if stop_or_continue(st.session_state.all_concepts) > 3:
+                                        if stop_or_continue(st.session_state.all_concepts) > 0:
                                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
                     else:  # if 'no' in response
                         clarification_question(last_asked_concept=st.session_state.last_asked_concept,
@@ -1197,7 +1196,7 @@ if st.session_state.start_experiment == "experiment":
                                 st.session_state.unstable_concept_dict = {}
                                 st.session_state.users_level = {}
                                 st.session_state.its_key = True  # not sure about this.
-                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                if stop_or_continue(st.session_state.all_concepts) > 0:
                                     stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
                     else:  # if not its.key so its a value
@@ -1249,7 +1248,7 @@ if st.session_state.start_experiment == "experiment":
                                 st.session_state.unstable_concept_dict = {}
                                 st.session_state.users_level = {}
                                 st.session_state.its_key = True  # not sure about this.
-                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                if stop_or_continue(st.session_state.all_concepts) > 0:
                                     stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
         else:  # if question validation is not necessary
@@ -1269,14 +1268,14 @@ if st.session_state.start_experiment == "experiment":
                     print(f"Concept level : {st.session_state.all_concepts}")
                     st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                     st.session_state.log_buffer.write("\n")
-                    if stop_or_continue(st.session_state.all_concepts) > 3:
+                    if stop_or_continue(st.session_state.all_concepts) > 0:
                         stop_button = st.button("Stop the conversation.", on_click=stop_button)
                 else:
                     assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                     st.session_state.asked_concepts.append(lowest_concept)
                     st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                     st.session_state.log_buffer.write("\n")
-                    if stop_or_continue(st.session_state.all_concepts) > 3:
+                    if stop_or_continue(st.session_state.all_concepts) > 0:
                         stop_button = st.button("Stop the conversation.", on_click=stop_button)
     
     
@@ -1301,7 +1300,7 @@ if st.session_state.start_experiment == "experiment":
                         give_advice_prompt(main_problem=st.session_state.main_problem_concept, user_prompt=user_prompt,
                                            chat_history=chat_history)
                         st.session_state.unstable_concept_dict = {}
-                        if stop_or_continue(st.session_state.all_concepts) > 3:
+                        if stop_or_continue(st.session_state.all_concepts) > 0:
                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
                     else:  # If the dictionary is not empty and hence there are has_effect_relations to further ask a question about.
                         st.session_state.users_level = initialize_users_level_dict(st.session_state.unstable_concept_dict)
@@ -1340,14 +1339,14 @@ if st.session_state.start_experiment == "experiment":
                         assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                         st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                         st.session_state.log_buffer.write("\n")
-                        if stop_or_continue(st.session_state.all_concepts) > 3:
+                        if stop_or_continue(st.session_state.all_concepts) > 0:
                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
                     else:
                         assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                         st.session_state.asked_concepts.append(lowest_concept)
                         st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                         st.session_state.log_buffer.write("\n")
-                        if stop_or_continue(st.session_state.all_concepts) > 3:
+                        if stop_or_continue(st.session_state.all_concepts) > 0:
                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
 
 
