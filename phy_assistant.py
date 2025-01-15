@@ -527,6 +527,9 @@ if "start_experiment" not in st.session_state:
 if "start_time" not in st.session_state:
     st.session_state.start_time = adjusted_time
 
+if "advice_given" not in st.session_state:
+    st.session_state.advice_given = False
+
 if st.session_state.start_experiment =="consent":
     st.text("""Welcome, and thank you for participating in this experiment. This experiment is part of a research project conducted by the AI & Behaviour group at the Vrije Universiteit Amsterdam. It involves interacting with a chatbot in a conversation focused on physical activity. It consists of three parts. In the first part, you will be asked a few questions about your age, prior experience with chatbots, and physical activity levels. This part will take about 2-3 minutes to complete.\n
     In the second part, you will engage in a conversation with our chatbot, which is expected to last around 15 minutes. During the conversation, you will have the option to end the session by clicking the 'Stop the conversation' button, which will appear after a while. Once you do so, you will proceed to the final part of the experiment, which consists of four questions aimed at assessing your experience with the chatbot. This last part will take approximately 2-3 minutes.\n
