@@ -489,10 +489,10 @@ def advice_because_no_advice():
     generic_advice = completion.choices[0].message.content
     with st.chat_message("assistant"):
         response = st.write_stream(generate_response(generic_advice))
-        st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
-        st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
+        st.session_state.log_buffer.write(f"Generic Advice : {response}\n")
+        st.session_state.log_buffer.write(f"ASSISTANT SAID: {response}\n")
         st.session_state.log_buffer.write("\n")
-        st.session_state.messages.append({"role": "assistant", "content": generic_advice})
+        st.session_state.messages.append({"role": "assistant", "content": response})
     
 
 ## Streamlit Initialization
