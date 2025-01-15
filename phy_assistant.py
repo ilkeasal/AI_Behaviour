@@ -434,7 +434,7 @@ def stop_button():
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     if st.session_state.advice_given == False:
         advice_because_no_advice()
-        st.session_state.start_experiment = "post-survey"
+        #st.session_state.start_experiment = "post-survey"
     else :
         st.session_state.start_experiment = "post-survey"
 
@@ -493,6 +493,11 @@ def advice_because_no_advice():
         st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
         st.session_state.log_buffer.write("\n")
         st.session_state.messages.append({"role": "assistant", "content": generic_advice})
+
+    post_survey_button = st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
+
+def post_survey_button_func():
+    st.session_state.start_experiment = "post-survey"
     
 
 ## Streamlit Initialization
