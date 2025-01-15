@@ -488,7 +488,7 @@ def advice_because_no_advice():
     ])
     generic_advice = completion.choices[0].message.content
     with st.chat_message("assistant"):
-        response = st.write_stream(generate_response(generic_advice))
+        #response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING
         st.session_state.log_buffer.write(f"Generic Advice : {response}\n")
         st.session_state.log_buffer.write(f"ASSISTANT SAID: {response}\n")
         st.session_state.log_buffer.write("\n")
