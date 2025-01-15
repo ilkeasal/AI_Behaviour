@@ -265,7 +265,7 @@ def assess_concepts_prompt(concept_name, user_prompt, chat_history):
 
 def give_advice_prompt(main_problem, user_prompt, chat_history):
     """Give advice with openai + formatted prompt"""
-    formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice that to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly.  Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
+    formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice  to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly.  Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
     st.session_state.log_buffer.write(f"GIVE ADVICE PROMPT : {formatted_prompt}\n")
     st.session_state.advice_given = True
     completion = client.chat.completions.create(
@@ -476,6 +476,20 @@ def post_survey_submit():
 
 def consent_submit():
     st.session_state.start_experiment = "pre-survey"
+
+def advice_because_no_advice():
+    "Gives an advice after the user clicks on the 'Stop the conversation' button, because no advice was given."
+    completion = client.chat.completions.create(model="gpt-4o-mini",messages=[
+        {"role":"assisstant",
+        "content":f"Based on the chat history : {chat_history}, provide advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
+    ])
+    generic_advice = completion.choices[0].message.content
+    with st.chat_message("assistant"):
+        response = st.write_stream(generate_response(generic_advice))
+        st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
+        st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
+        st.session_state.log_buffer.write("\n")
+        st.session_state.messages.append({"role": "assistant", "content": generic_advice})
     
 
 ## Streamlit Initialization
