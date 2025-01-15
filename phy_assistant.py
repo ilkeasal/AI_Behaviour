@@ -431,11 +431,10 @@ def level_check_after_validation(user_answer, last_asked_concept):
 
 
 def stop_button():
-    st.balloons()
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     if st.session_state.advice_given == False:
         advice_because_no_advice()
-        st.session_state.start_experiment = "post-survey"
+        #st.session_state.start_experiment = "post-survey"
     else :
         st.session_state.start_experiment = "post-survey"
 
