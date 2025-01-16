@@ -569,6 +569,7 @@ if st.session_state.start_experiment =="consent":
     st.button("Submit",on_click=consent_submit)
     
 if st.session_state.start_experiment =="final_advice":
+    advice_because_no_advice()
     
 
 if st.session_state.start_experiment=="pre-survey":
