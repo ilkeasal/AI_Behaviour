@@ -433,7 +433,8 @@ def level_check_after_validation(user_answer, last_asked_concept):
 def stop_button():
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     if st.session_state.advice_given == False:
-        advice_because_no_advice()
+        st.session_state.start_experiment = "final_advice"
+        #advice_because_no_advice()
         #st.session_state.start_experiment = "post-survey"
     else :
         st.session_state.start_experiment = "post-survey"
@@ -484,20 +485,20 @@ def advice_because_no_advice():
     "Gives an advice after the user clicks on the 'Stop the conversation' button, because no advice was given."
     completion = client.chat.completions.create(model="gpt-4o-mini",messages=[
         {"role":"assistant",
-        "content":f"Based on the chat history : {chat_history}, provide advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
+        "content":f"Based on the chat history : {chat_history}, provide a general advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
     ])
     generic_advice = completion.choices[0].message.content
-    #with st.chat_message("assistant"):
-        #response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING KEEP IT LIKE THAT
-        #st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
-        #st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
-        #st.session_state.log_buffer.write("\n")
-        #st.session_state.messages.append({"role": "assistant", "content": generic_advice})
-
+    with st.chat_message("assistant"):
+        response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING KEEP IT LIKE THAT
+        st.session_state.log_buffer.write(f"Generic Advice : {response}\n")
+        st.session_state.log_buffer.write(f"ASSISTANT SAID: {response}\n")
+        st.session_state.log_buffer.write("\n")
+        st.session_state.messages.append({"role": "assistant", "content": response})
     
-    button_placeholder = st.empty()
-    with button_placeholder.container():
-        st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
+    st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
+    #button_placeholder = st.empty()
+    #with button_placeholder.container():
+        #st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
 
 def post_survey_button_func():
     st.session_state.start_experiment = "post-survey"
@@ -567,7 +568,8 @@ if st.session_state.start_experiment =="consent":
     st.text("I have read and understood the information provided about the experiment and agree to participate voluntarily.")
     st.button("Submit",on_click=consent_submit)
     
-
+if st.session_state.start_experiment =="final_advice":
+    
 
 if st.session_state.start_experiment=="pre-survey":
     #st.write("How often do you use chatbots?")
