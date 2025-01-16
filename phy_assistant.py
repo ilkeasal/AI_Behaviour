@@ -583,7 +583,7 @@ if st.session_state.start_experiment=="pre-survey":
         4:"1-2 times a week",
         5:"Daily"
     }
-    chatbot_use= st.radio("How often do you use chatbots? ", options.keys(),index=None,format_func=lambda x:options[x])
+    chatbot_use= st.radio("How often do you use chatbots?(For example, AI-based chatbots like ChatGPT that can engage in a conversation with you.)", options.keys(),index=None,format_func=lambda x:options[x])
     #st.session_state.log_buffer.write(f"Chatbot user experience : {response} \n")
     days_input = st.number_input("On average, how many days per week do you engage in moderate to strenuous exercise?", min_value=0,max_value=7)
     hours_input = st.number_input("On average, how many minutes do you engage in exercise at this level?",min_value=0,max_value=240)
