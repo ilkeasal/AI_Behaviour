@@ -483,6 +483,7 @@ def consent_submit():
 
 def advice_because_no_advice():
     "Gives an advice after the user clicks on the 'Stop the conversation' button, because no advice was given."
+    chat_history = [(message["role"], message["content"]) for message in st.session_state.messages]
     completion = client.chat.completions.create(model="gpt-4o-mini",messages=[
         {"role":"assistant",
         "content":f"Based on the chat history : {chat_history}, provide a general advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
