@@ -567,10 +567,7 @@ if st.session_state.start_experiment =="consent":
     """)
     st.text("I have read and understood the information provided about the experiment and agree to participate voluntarily.")
     st.button("Submit",on_click=consent_submit)
-    
-if st.session_state.start_experiment =="final_advice":
-    advice_because_no_advice()
-    
+
 
 if st.session_state.start_experiment=="pre-survey":
     #st.write("How often do you use chatbots?")
@@ -1370,7 +1367,8 @@ elif st.session_state.start_experiment == "stop-experiment":
     st.empty()
     st.markdown(" ## **Thank you for participating!**")
     
-
+elif st.session_state.start_experiment =="final_advice":
+    advice_because_no_advice()
 
 
 if not st.session_state.uploaded_to_bucket:
