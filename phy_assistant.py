@@ -493,7 +493,7 @@ def advice_because_no_advice():
         st.session_state.log_buffer.write(f"Generic Advice : {response}\n")
         st.session_state.log_buffer.write(f"ASSISTANT SAID: {response}\n")
         st.session_state.log_buffer.write("\n")
-        st.session_state.messages.append({"role": "assistant", "content": response})
+        #st.session_state.messages.append({"role": "assistant", "content": response})
     
     st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
     #button_placeholder = st.empty()
