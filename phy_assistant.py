@@ -489,17 +489,17 @@ def advice_because_no_advice():
     ])
     generic_advice = completion.choices[0].message.content
 
-    button_placeholder = st.empty()
+    
     with st.chat_message("assistant"):
         #response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING KEEP IT LIKE THAT
         st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
         st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
         st.session_state.log_buffer.write("\n")
         st.session_state.messages.append({"role": "assistant", "content": generic_advice})
+        st.session_state.advice_displayed = True
 
         
-    with button_placeholder:
-        st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
+    
     #st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
     #button_placeholder = st.empty()
     #with button_placeholder.container():
@@ -560,10 +560,17 @@ if "start_experiment" not in st.session_state:
 if "start_time" not in st.session_state:
     st.session_state.start_time = adjusted_time
 
-if "advice_given" not in st.session_state:
+if "advice_given" not in st.session_state: #This is for the final advice, whether the participant was given any advice or not.
     st.session_state.advice_given = False
 
+if "advice_displayed" not in st.session_state: # This is for the proceed to the post-survey button. 
+    st.session_state.advice_displayed = False 
 
+
+
+
+if st.session_state.advice_displayed:
+    st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
 
 if st.session_state.start_experiment =="consent":
     st.text("""Welcome, and thank you for participating in this experiment. This experiment is part of a research project conducted by the AI & Behaviour group at the Vrije Universiteit Amsterdam. It involves interacting with a chatbot in a conversation focused on physical activity. It consists of three parts. In the first part, you will be asked a few questions about your age, prior experience with chatbots, and physical activity levels. This part will take about 2-3 minutes to complete.\n
