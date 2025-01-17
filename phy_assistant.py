@@ -491,11 +491,11 @@ def advice_because_no_advice():
 
     
     with st.chat_message("assistant"):
-        response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING KEEP IT LIKE THAT
-        st.session_state.log_buffer.write(f"Generic Advice : {response}\n")
-        st.session_state.log_buffer.write(f"ASSISTANT SAID: {response}\n")
+        #response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING KEEP IT LIKE THAT
+        st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
+        st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
         st.session_state.log_buffer.write("\n")
-        #st.session_state.messages.append({"role": "assistant", "content": generic_advice})
+        st.session_state.messages.append({"role": "assistant", "content": generic_advice})
         st.session_state.advice_displayed = True
 
         
