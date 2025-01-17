@@ -433,9 +433,8 @@ def level_check_after_validation(user_answer, last_asked_concept):
 def stop_button():
     st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
     if st.session_state.advice_given == False:
-        st.session_state.start_experiment = "final_advice"
-        #advice_because_no_advice()
-        #st.session_state.start_experiment = "post-survey"
+        #st.session_state.start_experiment = "final_advice"
+        advice_because_no_advice()
     else :
         st.session_state.start_experiment = "post-survey"
 
@@ -1369,8 +1368,8 @@ elif st.session_state.start_experiment == "stop-experiment":
     st.empty()
     st.markdown(" ## **Thank you for participating!**")
     
-elif st.session_state.start_experiment =="final_advice":
-    advice_because_no_advice()
+#elif st.session_state.start_experiment =="final_advice":
+    #advice_because_no_advice()
 
 
 if not st.session_state.uploaded_to_bucket:
