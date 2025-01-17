@@ -488,9 +488,9 @@ def advice_because_no_advice():
         "content":f"Based on the chat history : {chat_history}, provide a general advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
     ])
     generic_advice = completion.choices[0].message.content
-    st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
     with st.chat_message("assistant"):
         #response = st.write_stream(generate_response(generic_advice)) # COMMENT IT OUT AFTER TESTING KEEP IT LIKE THAT
+        st.button("Proceed to Post-Survey",on_click=post_survey_button_func)
         st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
         st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
         st.session_state.log_buffer.write("\n")
