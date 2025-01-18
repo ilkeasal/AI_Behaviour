@@ -499,7 +499,7 @@ def high_level_praise_advice(user_high,concept_definitions):
 
 
 
-def generic_advice_assess_concepts(high_level_praise_sent):
+def generic_advice_assess_concepts(high_level_praise_sent,concept_name,user_prompt,chat_history):
    """This function gets the output from the high_level_praise_advice function"""
    st.session_state.advice_given = True
    generic_advice_prompt = f"""Respond to the  {user_prompt} with a friendly and relevant acknowledgement. If the users' input includes a question or request for clarification, address it directly. {high_level_praise_sent}  Based on this, provide a general advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history : {chat_history}. Then naturally steer the conversation toward discussing aspects related to {concept_name} about physical activity. {concept_name} {concept_definitions_dict[concept_name]}.Ask exactly one direct and neutral question aimed at understanding the user's current behaviour or thoughts about {concept_name}.  The question must assess their current level on {concept_name}, without making any assumptions about what the user does/thinks or does not do/think. Ensure that your response transitions smoothly from {user_prompt} and is open-ended to encourage discussion. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights without breaking the flow or including unnecessary meta-information."""
@@ -1301,7 +1301,7 @@ if st.session_state.start_experiment == "experiment":
 
                    else:
                       sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
-                      generic_advice_assess_concepts(sentence)
+                      generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
                       if stop_or_continue(st.session_state.all_concepts) > 3:
                          stop_button = st.button("Stop the conversation.", on_click=stop_button)
                      
@@ -1382,7 +1382,7 @@ if st.session_state.start_experiment == "experiment":
 
                        else:
                           sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
-                          generic_advice_assess_concepts(sentence)
+                          generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
                           if stop_or_continue(st.session_state.all_concepts) > 3:
                              stop_button = st.button("Stop the conversation.", on_click=stop_button)
 
@@ -1398,7 +1398,7 @@ if st.session_state.start_experiment == "experiment":
 
                       else:
                          sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
-                         generic_advice_assess_concepts(sentence)
+                         generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
                          if stop_or_continue(st.session_state.all_concepts) > 3:
                             stop_button = st.button("Stop the conversation.", on_click=stop_button)
                            
