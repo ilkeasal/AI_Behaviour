@@ -1299,11 +1299,11 @@ if st.session_state.start_experiment == "experiment":
                       if stop_or_continue(st.session_state.all_concepts) > 3:
                           stop_button = st.button("Stop the conversation.", on_click=stop_button)
 
-                  else:
-                     sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
-                     generic_advice_assess_concepts(sentence)
-                     if stop_or_continue(st.session_state.all_concepts) > 3:
-                          stop_button = st.button("Stop the conversation.", on_click=stop_button)
+                   else:
+                      sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
+                      generic_advice_assess_concepts(sentence)
+                      if stop_or_continue(st.session_state.all_concepts) > 3:
+                         stop_button = st.button("Stop the conversation.", on_click=stop_button)
                      
                      
                else:
