@@ -511,6 +511,11 @@ def generic_advice_assess_concepts(high_level_praise_sent,concept_name,user_prom
 
    response = completion.choices[0].message.content
 
+   st.session_state.log_buffer.write(f"GENERIC ADVICE PROMPT IS BEING USED! {generic_advice_prompt}\n")
+   st.session_state.log_buffer.write(f"USER HIGH NEW : {st.session_state.user_high}\n")
+   st.session_state.log_buffer.write("\n")
+   
+
    with st.chat_message("assistant"):
       response = st.write_stream(generate_response(response))
       st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
