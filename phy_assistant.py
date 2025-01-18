@@ -265,9 +265,8 @@ def assess_concepts_prompt(concept_name, user_prompt, chat_history):
 
 def give_advice_prompt(main_problem, user_prompt, chat_history):
    """Give advice with openai + formatted prompt"""
-   formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice  to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly.  Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
+   formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way.Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. The user will benefit from strategies related to {main_problem}. {main_problem} {concept_definitions_dict[main_problem]}. Based on the user's input,and the chat_history ({chat_history}) offer advice that to help the user with their {main_problem}.In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly.  Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening.Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
    st.session_state.log_buffer.write(f"GIVE ADVICE PROMPT : {formatted_prompt}\n")
-   st.session_state.advice_given = True
    completion = client.chat.completions.create(
        model="gpt-4o-mini",
        messages=[{
@@ -353,7 +352,6 @@ def give_advice_users_level(give_advice_sentences):
    combined_input = "In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly."
    formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way. Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. {give_advice_sentences}.Based on this information, user's input : {user_prompt}, and chat history: {chat_history} offer advice to help the user become more physically active.{combined_input}. Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening. Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
    st.session_state.log_buffer.write(f"GIVE ADVICE USERS LEVEL PROMPT : {formatted_prompt}\n")
-   st.session_state.advice_given = True
    completion = client.chat.completions.create(
        model="gpt-4o-mini",
        messages=[
@@ -431,12 +429,9 @@ def level_check_after_validation(user_answer, last_asked_concept):
 
 
 def stop_button():
+   st.balloons()
    st.session_state.log_buffer.write("STOP BUTTON PRESSED!\n")
-   if st.session_state.advice_given == False:
-       advice_because_no_advice()
-       #st.session_state.start_experiment = "post-survey"
-   else :
-       st.session_state.start_experiment = "post-survey"
+   st.session_state.start_experiment = "post-survey"
 
 
 def stop_or_continue(a_dict):
@@ -479,20 +474,6 @@ def post_survey_submit():
 
 def consent_submit():
    st.session_state.start_experiment = "pre-survey"
-
-def advice_because_no_advice():
-   "Gives an advice after the user clicks on the 'Stop the conversation' button, because no advice was given."
-   completion = client.chat.completions.create(model="gpt-4o-mini",messages=[
-       {"role":"assistant",
-       "content":f"Based on the chat history : {chat_history}, provide advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights. "}
-   ])
-   generic_advice = completion.choices[0].message.content
-   with st.chat_message("assistant"):
-       response = st.write_stream(generate_response(generic_advice))
-       st.session_state.log_buffer.write(f"Generic Advice : {generic_advice}\n")
-       st.session_state.log_buffer.write(f"ASSISTANT SAID: {generic_advice}\n")
-       st.session_state.log_buffer.write("\n")
-       st.session_state.messages.append({"role": "assistant", "content": generic_advice})
 
 
 ## Streamlit Initialization
@@ -545,9 +526,6 @@ if "start_experiment" not in st.session_state:
 
 if "start_time" not in st.session_state:
    st.session_state.start_time = adjusted_time
-
-if "advice_given" not in st.session_state:
-   st.session_state.advice_given = False
 
 if st.session_state.start_experiment =="consent":
    st.text("""Welcome, and thank you for participating in this experiment. This experiment is part of a research project conducted by the AI & Behaviour group at the Vrije Universiteit Amsterdam. It involves interacting with a chatbot in a conversation focused on physical activity. It consists of three parts. In the first part, you will be asked a few questions about your age, prior experience with chatbots, and physical activity levels. This part will take about 2-3 minutes to complete.\n
@@ -1364,7 +1342,6 @@ elif st.session_state.start_experiment == "stop-experiment":
 
 if not st.session_state.uploaded_to_bucket:
    upload_to_bucket("phy_assistant_bucket", st.session_state.log_buffer.getvalue(), user_id=st.session_state.user_id)
-
 
 
 
