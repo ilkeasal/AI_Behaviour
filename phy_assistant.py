@@ -739,6 +739,7 @@ if st.session_state.start_experiment == "experiment":
 
                    else:  # if "High" in construct name level
                        st.session_state.users_level[st.session_state.last_asked_concept]["status"] = "High"
+                       st.session_state.user_high.append(st.session_state.last_asked_concept)
                        del st.session_state.unstable_concept_dict[st.session_state.last_asked_concept]
                        print(st.session_state.users_level)
                        st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
@@ -840,6 +841,7 @@ if st.session_state.start_experiment == "experiment":
                    else:  # if 'High' in construct name level :
                        st.session_state.users_level[st.session_state.last_asked_key]["dependencies"][
                            st.session_state.last_asked_concept]["status"] = "High"
+                       st.session_state.user_high.append(st.session_state.last_asked_concept)
                        st.session_state.unstable_concept_dict[st.session_state.last_asked_key].remove(
                            st.session_state.last_asked_concept)
                        # st.session_state.all_concepts[st.session_state.last_asked_concept]+=1
@@ -1029,6 +1031,7 @@ if st.session_state.start_experiment == "experiment":
                                st.session_state.log_buffer.write(
                                    f"We have validated a key and it has a high level! : {level}\n")
                                st.session_state.log_buffer.write("\n")
+                               st.session_state.user_high.append(st.session_state.last_asked_concept)
                                st.session_state.users_level[st.session_state.last_asked_concept]["status"] = "High"
                                del st.session_state.unstable_concept_dict[st.session_state.last_asked_concept]
                                if st.session_state.unstable_concept_dict:  # if there are other keys to ask a q about.
@@ -1060,6 +1063,7 @@ if st.session_state.start_experiment == "experiment":
 
                            else:  # if what we validated with high value was a value and not a key.
                                print(f"We have validated a value and it has a high level! : {level}")
+                               st.session_state.user_high.append(st.session_state.last_asked_concept)
                                st.session_state.log_buffer.write(
                                    f"We have validated a value and it has a high level! : {level}\n")
                                st.session_state.users_level[st.session_state.last_asked_key]["dependencies"][
@@ -1304,6 +1308,7 @@ if st.session_state.start_experiment == "experiment":
                    st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                    print(f"ALL CONCEPTS : {st.session_state.all_concepts}")
                    print(f"The user had a high value for the concept {st.session_state.main_problem_concept}")
+                   st.session_state.user_high.append(st.session_state.main_problem_concept)
                    st.session_state.log_buffer.write(
                        f"The user had a high value for the concept {st.session_state.main_problem_concept}\n")
                    lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
