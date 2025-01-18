@@ -476,6 +476,46 @@ def consent_submit():
    st.session_state.start_experiment = "pre-survey"
 
 
+def high_level_praise_advice(user_high,concept_definitions):
+   """ Here user_high is st.session_state.user_high and concept definitions is concept_definitions_dict"""
+   high_level_sent = "The user demonstrates high levels of "
+   concept_names = ", ".join(user_high)
+
+   first_part = high_level_sent + concept_names + "."
+
+   second_part = " "
+
+   for concept in user_high:
+      individual_sentence = concept + " " + concept_definitions[concept]
+
+      second_part+= " " + individual_sentence
+
+   full_sentence = first_part + second_part
+
+
+   return full_sentence
+
+
+
+def generic_advice_assess_concepts(high_level_praise_sent):
+   """This function gets the output from the high_level_praise_advice function"""
+    generic_advice_prompt = f"""Respond to the  {user_prompt} with a friendly and relevant acknowledgement. If the users' input includes a question or request for clarification, address it directly. {high_level_praise_sent}  Based on this, provide a general advice that encourages the user to maintain their positive habits while offering tips to sustain long-term success. In your advice, make assumptions only if they are clearly supported by the chat history : {chat_history}. Then naturally steer the conversation toward discussing aspects related to {concept_name} about physical activity. {concept_name} {concept_definitions_dict[concept_name]}.Ask exactly one direct and neutral question aimed at understanding the user's current behaviour or thoughts about {concept_name}.  The question must assess their current level on {concept_name}, without making any assumptions about what the user does/thinks or does not do/think. Ensure that your response transitions smoothly from {user_prompt} and is open-ended to encourage discussion. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly. Use relevant parts of the chat history but avoid repeating your responses. Make sure your responses build on the past conversation and adds new insights without breaking the flow or including unnecessary meta-information.”
+
+    completion = client.chat.completions.create(model="gpt-4o-mini",messages=[
+    "role":"assistant",
+    "content":generic_advice_prompt
+    ])
+
+    response = completion.choices[0].message.content
+
+    with st.chat_message("assistant"):
+       response = st.write_stream(generate_response(response))
+       st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
+       st.session_state.log_buffer.write("\n")
+       st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+
 ## Streamlit Initialization
 
 if "messages" not in st.session_state:
