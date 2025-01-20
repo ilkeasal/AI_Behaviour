@@ -63,7 +63,7 @@ session = driver.session()
 graph = Neo4jGraph(url=neo4j_url, username=NEO4J_USERNAME, password=NEO4J_PASSWORD)
 
 if "user_id" not in st.session_state:
-   st.session_state.user_id = UUIDShortener.encode(str(uuid.uuid4()))
+   st.session_state.user_id =("EXP_" + (UUIDShortener.encode(str(uuid.uuid4()))))
 
 
 def upload_to_bucket(bucket_name, log_data, user_id):
