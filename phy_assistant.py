@@ -1463,23 +1463,23 @@ elif st.session_state.experiment_condition == 2:
             st.markdown(user_prompt)
 
 
-   if user_prompt:
-      completion = client.chat.completions.create(
-         model = "gpt-4o-mini",
-         messages=[
-            {"role":"assistant",
-             "content":f"Your goal is to help people become more physically active. Therefore, taking the user input: {user_prompt} and the chat history : {chat_history} into account, answer the user and, if appropriate, provide advice. Aim to steer the conversation naturally toward physical activity."
-               
-            }
-         ]
-      )
-
-      answer = completion.choices[0].message.content
-
-
-      with st.chat_message("assistant"):
-         response = st.write_stream(generate_response(response))
-         st.session_state.messages.append({"role":"assistant","content":response})
+      if user_prompt:
+         completion = client.chat.completions.create(
+            model = "gpt-4o-mini",
+            messages=[
+               {"role":"assistant",
+                "content":f"Your goal is to help people become more physically active. Therefore, taking the user input: {user_prompt} and the chat history : {chat_history} into account, answer the user and, if appropriate, provide advice. Aim to steer the conversation naturally toward physical activity."
+                  
+               }
+            ]
+         )
+   
+         answer = completion.choices[0].message.content
+   
+   
+         with st.chat_message("assistant"):
+            response = st.write_stream(generate_response(response))
+            st.session_state.messages.append({"role":"assistant","content":response})
                               
 
 
