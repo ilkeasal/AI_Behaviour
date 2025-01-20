@@ -1462,6 +1462,7 @@ elif st.session_state.experiment_condition == 2:
          with st.chat_message("user"):
             st.markdown(user_prompt)
 
+      chat_history = [(message["role"], message["content"]) for message in st.session_state.messages]
 
       if user_prompt:
          completion = client.chat.completions.create(
