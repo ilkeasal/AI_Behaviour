@@ -1445,6 +1445,7 @@ elif st.session_state.experiment_condition == 2:
    if "user_id" not in st.session_state:
       st.session_state.user_id =("CTRL_" + (UUIDShortener.encode(str(uuid.uuid4()))))
 
+
    if st.session_state.start_experiment == "experiment":
 
 
@@ -1460,6 +1461,26 @@ elif st.session_state.experiment_condition == 2:
       
          with st.chat_message("user"):
             st.markdown(user_prompt)
+
+   control_prompt = f"Your goal is to help people become more physically active. Therefore, taking the user input: {user_prompt} and the chat history : {chat_history} into account, answer the user and, if appropriate, provide advice. Aim to steer the conversation naturally toward physical activity."
+
+   if user_prompt:
+      completion = client.chat.completions.create(
+         model = "gpt-4o-mini",
+         messages=[
+            {"role":"assistant",
+             "content":control_prompt
+               
+            }
+         ]
+      )
+
+      answer = completion.choices[0].message.content
+
+
+      with st.chat_message("assistant"):
+         response = st.write_stream(generate_response(response))
+         st.session_state.messages.append({"role":"assistant","content":response})
                               
 
 
