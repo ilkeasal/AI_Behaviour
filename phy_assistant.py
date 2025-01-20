@@ -582,6 +582,13 @@ if "save_conversation" not in st.session_state:
 
 if "experiment_condition" not in st.session_state:
    st.session_state.experiment_condition = random.choice([1,2])
+   if st.session_state.experiment_condition == 1:
+      st.session_state.log_buffer.write(" 1 : EXPERIMENT CONDITION \n")
+      st.session_state.log_buffer.write("\n")
+   else:
+      st.session_state.log_buffer.write(" 2 : CONTROL CONDITION \n")
+      st.session_state.log_buffer.write("\n")
+      
 
 if st.session_state.start_experiment =="consent":
    st.text("""Welcome, and thank you for participating in this experiment. This experiment is part of a research project conducted by the AI & Behaviour group at the Vrije Universiteit Amsterdam. It involves interacting with a chatbot in a conversation focused on physical activity. It consists of three parts. In the first part, you will be asked a few questions about your age, prior experience with chatbots, and physical activity levels. This part will take about 2-3 minutes to complete.\n
