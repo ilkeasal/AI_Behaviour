@@ -1451,13 +1451,13 @@ elif st.session_state.experiment_condition == 2:
               st.markdown(message["content"])
    
    
-      if user_prompt := st.chat_input("Want to share some thoughts?"):
-          st.session_state.messages.append({"role": "user", "content": user_prompt})
-          st.session_state.log_buffer.write(f"USER SAID : {user_prompt}\n")
-          st.session_state.log_buffer.write("\n")
+   if user_prompt := st.chat_input("Want to share some thoughts?"):
+      st.session_state.messages.append({"role": "user", "content": user_prompt})
+      st.session_state.log_buffer.write(f"USER SAID : {user_prompt}\n")
+      st.session_state.log_buffer.write("\n")
    
-          with st.chat_message("user"):
-              st.markdown(user_prompt)
+      with st.chat_message("user"):
+         st.markdown(user_prompt)
                               
 
 
