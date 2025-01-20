@@ -99,7 +99,6 @@ stream_handler.setFormatter(formatter)
 if not logger.handlers:
    logger.addHandler(stream_handler)
 
-logger.debug("This is an examplee!")
 
 # Google cloud storage setup :
 
