@@ -1462,14 +1462,13 @@ elif st.session_state.experiment_condition == 2:
          with st.chat_message("user"):
             st.markdown(user_prompt)
 
-   control_prompt = f"Your goal is to help people become more physically active. Therefore, taking the user input: {user_prompt} and the chat history : {chat_history} into account, answer the user and, if appropriate, provide advice. Aim to steer the conversation naturally toward physical activity."
 
    if user_prompt:
       completion = client.chat.completions.create(
          model = "gpt-4o-mini",
          messages=[
             {"role":"assistant",
-             "content":control_prompt
+             "content":f"Your goal is to help people become more physically active. Therefore, taking the user input: {user_prompt} and the chat history : {chat_history} into account, answer the user and, if appropriate, provide advice. Aim to steer the conversation naturally toward physical activity."
                
             }
          ]
