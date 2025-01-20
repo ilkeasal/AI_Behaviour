@@ -1479,7 +1479,7 @@ elif st.session_state.experiment_condition == 2:
    
    
          with st.chat_message("assistant"):
-            response = st.write_stream(generate_response(response))
+            response = st.write_stream(generate_response(answer))
             st.session_state.messages.append({"role":"assistant","content":response})
                               
 
