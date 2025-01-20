@@ -473,6 +473,7 @@ def post_survey_submit():
    st.session_state.log_buffer.write(adjusted_time)
    st.session_state.log_buffer.write("\n")
    st.session_state.start_experiment = "stop-experiment"
+   st.session_state.save_conversation = True
 
 def consent_submit():
    st.session_state.start_experiment = "pre-survey"
@@ -580,6 +581,9 @@ if "advice_given" not in st.session_state:
 
 if "user_high" not in st.session_state:
    st.session_state.user_high = []
+
+if "save_conversation" not in st.session_state:
+   st.session_state.save_conversation = False 
 
 if st.session_state.start_experiment =="consent":
    st.text("""Welcome, and thank you for participating in this experiment. This experiment is part of a research project conducted by the AI & Behaviour group at the Vrije Universiteit Amsterdam. It involves interacting with a chatbot in a conversation focused on physical activity. It consists of three parts. In the first part, you will be asked a few questions about your age, prior experience with chatbots, and physical activity levels. This part will take about 2-3 minutes to complete.\n
@@ -1443,7 +1447,7 @@ elif st.session_state.start_experiment == "stop-experiment":
 
 
 
-if not st.session_state.uploaded_to_bucket:
+if not st.session_state.uploaded_to_bucket and if st.session_state.save_conversation:
    upload_to_bucket("phy_assistant_bucket", st.session_state.log_buffer.getvalue(), user_id=st.session_state.user_id)
 
 
