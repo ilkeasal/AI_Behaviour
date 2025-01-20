@@ -1520,7 +1520,7 @@ elif st.session_state.experiment_condition == 2:
                               
 
 
-elif st.session_state.start_experiment == "post-survey":
+if st.session_state.start_experiment == "post-survey":
    st.write("To finalize your participation, please complete the short survey below. Providing honest responses is essential to ensure your contributions are accurately reflected in the study. The scale ranges from strongly disagree to strongly agree, including options disagree, somewhat disagree, neutral, somewhat agree, agree, and strongly agree.\n")
    question1 = survey.select_slider("Q1 : The chatbot personalized the conversation based on my personal information.", options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q1")
    question2 = survey.select_slider("Q2 : I am satisfied with the advice given to me by this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
@@ -1529,7 +1529,7 @@ elif st.session_state.start_experiment == "post-survey":
    submit_button = st.button("Submit",on_click=post_survey_submit)
 
 
-elif st.session_state.start_experiment == "stop-experiment":
+if st.session_state.start_experiment == "stop-experiment":
    st.empty()
    st.markdown(" ## **Thank you for participating!**")
 
