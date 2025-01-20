@@ -1447,8 +1447,9 @@ elif st.session_state.start_experiment == "stop-experiment":
 
 
 
-if not st.session_state.uploaded_to_bucket and if st.session_state.save_conversation:
-   upload_to_bucket("phy_assistant_bucket", st.session_state.log_buffer.getvalue(), user_id=st.session_state.user_id)
+if not st.session_state.uploaded_to_bucket:
+   if st.session_state.save_conversation:
+      upload_to_bucket("phy_assistant_bucket", st.session_state.log_buffer.getvalue(), user_id=st.session_state.user_id)
 
 
 
