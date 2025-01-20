@@ -628,7 +628,7 @@ if st.session_state.experiment_condition == 1:
    st.write("EXPERIMENT CONDITION")
 
    if "user_id" not in st.session_state:
-   st.session_state.user_id =("EXP_" + (UUIDShortener.encode(str(uuid.uuid4()))))
+      st.session_state.user_id =("EXP_" + (UUIDShortener.encode(str(uuid.uuid4()))))
 
    if st.session_state.start_experiment == "experiment":
    
@@ -1443,7 +1443,7 @@ elif st.session_state.experiment_condition == 2:
    st.write("CONTROL CONDITION")
 
    if "user_id" not in st.session_state:
-   st.session_state.user_id =("CTRL_" + (UUIDShortener.encode(str(uuid.uuid4()))))
+      st.session_state.user_id =("CTRL_" + (UUIDShortener.encode(str(uuid.uuid4()))))
                               
 
 
