@@ -628,9 +628,6 @@ if st.session_state.start_experiment=="pre-survey":
 
 if st.session_state.experiment_condition == 1:
 
-   st.session_state.log_buffer.write("--EXPERIMENT CONDITION--\n")
-   st.session_state.log_buffer.write("\n")
-
    st.write("EXPERIMENT CONDITION")
 
    if "user_id" not in st.session_state:
@@ -1481,9 +1478,6 @@ if st.session_state.experiment_condition == 1:
                                st.session_state.log_buffer.write("\n")
 
 elif st.session_state.experiment_condition == 2:
-
-   st.session_state.log_buffer.write("--CONTROL CONDITION--\n")
-   st.session_state.log_buffer.write("\n")
 
    st.write("CONTROL CONDITION")
 
