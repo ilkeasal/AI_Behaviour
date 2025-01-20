@@ -1444,6 +1444,20 @@ elif st.session_state.experiment_condition == 2:
 
    if "user_id" not in st.session_state:
       st.session_state.user_id =("CTRL_" + (UUIDShortener.encode(str(uuid.uuid4()))))
+
+
+   for message in st.session_state["messages"]:
+          with st.chat_message(message["role"]):
+              st.markdown(message["content"])
+   
+   
+      if user_prompt := st.chat_input("Want to share some thoughts?"):
+          st.session_state.messages.append({"role": "user", "content": user_prompt})
+          st.session_state.log_buffer.write(f"USER SAID : {user_prompt}\n")
+          st.session_state.log_buffer.write("\n")
+   
+          with st.chat_message("user"):
+              st.markdown(user_prompt)
                               
 
 
