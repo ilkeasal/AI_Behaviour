@@ -581,7 +581,7 @@ if "save_conversation" not in st.session_state:
    st.session_state.save_conversation = False 
 
 if "all_known_concepts" not in st.session_state:
-   st.session_state.all_known_concepts = {}
+   st.session_state.all_known_concepts = {"concepts":{}}
 
 if "experiment_condition" not in st.session_state:
    st.session_state.experiment_condition = random.choice([1,2])
