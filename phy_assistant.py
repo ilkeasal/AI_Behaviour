@@ -580,6 +580,9 @@ if "user_high" not in st.session_state:
 if "save_conversation" not in st.session_state:
    st.session_state.save_conversation = False 
 
+if "all_known_concepts" not in st.session_state:
+   st.session_state.all_known_concepts = {}
+
 if "experiment_condition" not in st.session_state:
    st.session_state.experiment_condition = random.choice([1,2])
    if st.session_state.experiment_condition == 1:
