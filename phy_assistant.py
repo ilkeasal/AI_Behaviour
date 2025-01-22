@@ -609,6 +609,15 @@ if st.session_state.start_experiment=="pre-survey":
    st.session_state.log_buffer.write(adjusted_time)
    st.session_state.log_buffer.write("\n")
    age = st.number_input("What is your age?",min_value=18, max_value=64)
+   gender_options = {
+      1:"Male",
+      2:"Female",
+      3:"Other/Prefer not to say"
+   }
+
+   gender_question = st.radio("What is your gender?", gender_options.keys(),index=None,format_func=lambda x:gender_options[x])
+   
+   
    options = {
        1:"Never",
        2:"1-2 times a year",
@@ -621,11 +630,11 @@ if st.session_state.start_experiment=="pre-survey":
    days_input = st.number_input("On average, how many days per week do you engage in moderate to strenuous exercise?", min_value=0,max_value=7)
    hours_input = st.number_input("On average, how many minutes do you engage in exercise at this level?",min_value=0,max_value=240)
    strength_input = st.number_input("On average, how many days a week do you perform muscle strengthening exercises, such as body weight exercises or resistance training?",min_value=0, max_value=7)
-   st.markdown(f"""
-       * Number of days: {days_input}
-       * Number of minutes: {hours_input}
-       * Strength activity: {strength_input}
-       """)
+   #st.markdown(f"""
+       #* Number of days: {days_input}
+       #* Number of minutes: {hours_input}
+       #* Strength activity: {strength_input}
+       #""")
    submit_button = st.button("Submit",on_click=submit_submit_function)
 
 
