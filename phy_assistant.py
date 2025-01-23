@@ -446,9 +446,12 @@ def stop_or_continue(a_dict):
 def submit_submit_function():
    st.session_state.start_experiment = "experiment"
    st.session_state.log_buffer.write("PHY ASSESSMENT!\n")
+   st.session_state.log_buffer.write(f"Gender input : {gender_input}\n")
    st.session_state.log_buffer.write(f"Days input : {days_input}\n")
    st.session_state.log_buffer.write(f"Minutes input : {hours_input}\n")
    st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
+   st.session_state.log_buffer.write(f"Importance input : {importance_input}\n")
+   st.session_state.log_buffer.write(f"Motivation input : {motivation_input}\n")
    total_activity_levels = days_input * hours_input
    st.session_state.log_buffer.write(f"Total activity : {total_activity_levels}\n")
    st.session_state.log_buffer.write(f"Chatbot user experience : {chatbot_use} \n")
@@ -459,6 +462,7 @@ def submit_submit_function():
    else:
        st.session_state.log_buffer.write("NOT ACTIVE\n")
 
+   st.session_state.log_buffer.write(f"Pre-experiment questions completed : {adjusted_time}")
    st.session_state.log_buffer.write(f"\n")
 
 def post_survey_submit():
@@ -467,7 +471,7 @@ def post_survey_submit():
    st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
    st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
    st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
-   st.session_state.log_buffer.write(adjusted_time)
+   st.session_state.log_buffer.write(f"Post-experiment questions completed :n {adjusted_time}")
    st.session_state.log_buffer.write("\n")
    st.session_state.start_experiment = "stop-experiment"
    st.session_state.save_conversation = True
@@ -617,7 +621,7 @@ if st.session_state.start_experiment=="pre-survey":
       3:"Other/Prefer not to say"
    }
 
-   gender_question = st.radio("What is your gender?", gender_options.keys(),index=None,format_func=lambda x:gender_options[x])
+   gender_input = st.radio("What is your gender?", gender_options.keys(),index=None,format_func=lambda x:gender_options[x])
    
    
    options = {
