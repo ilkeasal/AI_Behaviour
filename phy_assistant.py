@@ -462,7 +462,7 @@ def submit_submit_function():
    else:
        st.session_state.log_buffer.write("NOT ACTIVE\n")
 
-   st.session_state.log_buffer.write(f"Pre-experiment questions completed : {adjusted_time}")
+   st.session_state.log_buffer.write(f"Pre-experiment questions completed : {adjusted_time}\n")
    st.session_state.log_buffer.write(f"\n")
 
 def post_survey_submit():
@@ -471,7 +471,7 @@ def post_survey_submit():
    st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
    st.session_state.log_buffer.write(f"Question 3 answer : {question3}\n")
    st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
-   st.session_state.log_buffer.write(f"Post-experiment questions completed :n {adjusted_time}")
+   st.session_state.log_buffer.write(f"Post-experiment questions completed : {adjusted_time}\n")
    st.session_state.log_buffer.write("\n")
    st.session_state.start_experiment = "stop-experiment"
    st.session_state.save_conversation = True
