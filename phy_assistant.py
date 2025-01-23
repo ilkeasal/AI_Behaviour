@@ -250,6 +250,7 @@ def assess_concepts_prompt(concept_name, user_prompt, chat_history):
        }]
    )
    st.session_state.log_buffer.write(f"ASSESS CONCEPTS PROMPT : {formatted_prompt}\n")
+   st.session_state.log_buffer.write("\n")
    response = completion.choices[0].message.content
    with st.chat_message("assistant"):
        response = st.write_stream(generate_response(response))
@@ -349,6 +350,7 @@ def give_advice_users_level(give_advice_sentences):
    combined_input = "In your response, make assumptions or inferences only if they are clearly supported by the chat history. Do not include any explanations, reflections, or commentary about the purpose, structure, or intent of your response, either implicitly or explicitly."
    formatted_prompt = f"""Start by acknowledging the user's input, {user_prompt} in a friendly and empathetic way. Reflect briefly on their perspective to show understanding. If the user's input includes a question or request for clarification, address it directly. {give_advice_sentences}.Based on this information, user's input : {user_prompt}, and chat history: {chat_history} offer advice to help the user become more physically active.{combined_input}. Use relevant parts of the chat history, for context, but avoid repeating advice word-for-word. Make sure your response builds on the past conversations and adds new insights.If you made promises to the user such as providing specific recommendations in the previous conversation build on them in a consistent and supportive way. Phrase your recommendations in a unique, and varied language to keep the conversation fresh and engaging. Relate your advice directly to the user's input to show you're listening. Keep your responses concise, ideally under 250 tokens, while maintaining a complete thought."""
    st.session_state.log_buffer.write(f"GIVE ADVICE USERS LEVEL PROMPT : {formatted_prompt}\n")
+   st.session_state.log_buffer.write("\n")
    completion = client.chat.completions.create(
        model="gpt-4o-mini",
        messages=[
@@ -371,6 +373,7 @@ def clarification_question(last_asked_concept, chat_history):
    user_answer = " ".join(chat_history[-1])
    formatted_prompt = f"""The user's response '{user_answer}' did not appropriately answer the question '{assistant_answer}'. Acknowledge the user's response naturally and empathetically. If the users' input includes a question or request for clarification, address it directly. Then seamlessly transition to rephrasing and simplifying the original question to steer the conversation back to the concept '{last_asked_concept}'. {last_asked_concept} {concept_definitions_dict[last_asked_concept]}. Ensure that you only ask one revised question and that question is direct and neutral and aims to understand user's current behaviour or thoughts about {last_asked_concept} while flowing naturally from the acknowledgement. Your output should be concise, with a smooth transition and a revised question. Take the chat history into account {chat_history} so that you do not repeat yourself. It is very important that you do not ask the same question word-by-word. Do not include any explanations, reflections, or commentary about the purpose or structure of your response."""
    st.session_state.log_buffer.write(f"CLARIFICATION QUESTION PROMPT : {formatted_prompt}\n")
+   st.session_state.log_buffer.write("\n")
    completion = client.chat.completions.create(
        model="gpt-4o-mini",
        messages=[
@@ -395,6 +398,7 @@ def validation_question(last_asked_concept, chat_history):
    validation_question = (
        f"Does the user's response '{user_answer}' appropriately answer the question asked by the assistant '{assistant_answer}' to assess the users' level on {last_asked_concept}? {last_asked_concept} {concept_definitions_dict[last_asked_concept]}. Assess whether the user's response provides sufficient information-explicitly or implicitly-about their behaviours, attitudes, or practices related to {last_asked_concept}. Explicit information includes direct affirmations or denials (e.g., 'Yes, I do.', or 'No I do not'), while implicit information may involve reasoning, beliefs, or examples that clearly suggest a level of engagement (either low or high) with {last_asked_concept}. Responses that describe behaviours or beliefs indirectly connected to {last_asked_concept} can also be considered sufficient if they imply the user's level. For example, a response that describes consistent or inconsistent behaviours, attitudes, or practices directly tied to {last_asked_concept} can be enough to make an assessment. If the user's response provides enough information to evaluate their level on {last_asked_concept}, return 'yes' and provide a brief explanation of why it is sufficient. If the user's response does not address the concept or is too vague to make an assessment, return 'no' and provide a brief explanation of what is missing.")
    st.session_state.log_buffer.write(f"VALIDATION QUESTION PROMPT : {validation_question}\n")
+   st.session_state.log_buffer.write("\n")
    completion = client.chat.completions.create(model="gpt-4o-mini", messages=[
        {"role": "assistant",
         "content": validation_question}
