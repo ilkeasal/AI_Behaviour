@@ -426,10 +426,9 @@ def level_check_after_validation(user_answer, last_asked_concept):
 
 
 def stop_button():
-   st.session_state.log_buffer.write(adjusted_time)
-   st.session_state.log_buffer.write("\n")
    st.balloons()
    st.session_state.log_buffer.write(f"STOP BUTTON PRESSED! : {adjusted_time}\n")
+   st.session_state.log_buffer.write("\n")
    st.session_state.start_experiment = "post-survey"
 
 
