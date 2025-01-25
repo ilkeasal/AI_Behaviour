@@ -1466,64 +1466,72 @@ if st.session_state.experiment_condition == 1:
                       st.session_state.user_high.append(st.session_state.main_problem_concept)
                       st.session_state.log_buffer.write(
                           f"The user had a high value for the concept {st.session_state.main_problem_concept}\n")
-                      lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
-                      if st.session_state.asked_concepts.count(lowest_concept) > 2:
-                          st.session_state.all_concepts[lowest_concept] += 1
-                          st.session_state.log_buffer.write(f"Previous asked concepts : {st.session_state.asked_concepts}\n")
-                          st.session_state.asked_concepts = [i for i in st.session_state.asked_concepts if
-                                                             i != lowest_concept]
-                          st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
-                          lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
-                          st.session_state.asked_concepts.append(lowest_concept)
-                          st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
-                          if st.session_state.advice_given:
-                             assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
-                             st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
-                             st.session_state.log_buffer.write("\n")
-                             if stop_or_continue(st.session_state.all_concepts) > 3:
-                                 st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
-                                 st.session_state.log_buffer.write("\n")
-                                 stop_button = st.button("Stop the conversation.", on_click=stop_button)
-   
-                          else:
-                             if stop_or_continue(st.session_state.all_concepts) > 3:
-                                sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
-                                generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
-                                st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
-                                st.session_state.log_buffer.write("\n")
-                                stop_button = st.button("Stop the conversation.", on_click=stop_button)
-                                
-                             else:
+                      chosen_prompt = random.choice([1,2,2])
+                      if chosen_prompt ==1:
+                         continue_the_conversation()
+                         st.session_state.log_buffer.write(f"Chosen prompt is : {chosen_prompt}\n")
+                         st.session_state.log_buffer.write("\n")
+                      else : # if chosen prompt is 2, hence assess concepts prompt :
+                         st.session_state.log_buffer.write(f"Chosen prompt is : {chosen_prompt}\n")
+                         st.session_state.log_buffer.write("\n")
+                         lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                         if st.session_state.asked_concepts.count(lowest_concept) > 2:
+                             st.session_state.all_concepts[lowest_concept] += 1
+                             st.session_state.log_buffer.write(f"Previous asked concepts : {st.session_state.asked_concepts}\n")
+                             st.session_state.asked_concepts = [i for i in st.session_state.asked_concepts if
+                                                                i != lowest_concept]
+                             st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
+                             lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                             st.session_state.asked_concepts.append(lowest_concept)
+                             st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
+                             if st.session_state.advice_given:
                                 assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
-                                st.session_state.asked_concepts.append(lowest_concept)
                                 st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                 st.session_state.log_buffer.write("\n")
-   
-                          
-                      else:
-                         if st.session_state.advice_given:
-                            assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
-                            st.session_state.asked_concepts.append(lowest_concept)
-                            st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
-                            st.session_state.log_buffer.write("\n")
-                            if stop_or_continue(st.session_state.all_concepts) > 3:
-                               st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
-                               st.session_state.log_buffer.write("\n")
-                               stop_button = st.button("Stop the conversation.", on_click=stop_button)
-   
+                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                    st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
+                                    st.session_state.log_buffer.write("\n")
+                                    stop_button = st.button("Stop the conversation.", on_click=stop_button)
+      
+                             else:
+                                if stop_or_continue(st.session_state.all_concepts) > 3:
+                                   sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
+                                   generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
+                                   st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
+                                   st.session_state.log_buffer.write("\n")
+                                   stop_button = st.button("Stop the conversation.", on_click=stop_button)
+                                   
+                                else:
+                                   assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                                   st.session_state.asked_concepts.append(lowest_concept)
+                                   st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                                   st.session_state.log_buffer.write("\n")
+      
+                             
                          else:
-                            if stop_or_continue(st.session_state.all_concepts) > 3:
-                               sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
-                               generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
-                               st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
-                               st.session_state.log_buffer.write("\n")
-                               stop_button = st.button("Stop the conversation.", on_click=stop_button)
-                               
-                            else:
+                            if st.session_state.advice_given:
                                assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                                st.session_state.asked_concepts.append(lowest_concept)
                                st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                st.session_state.log_buffer.write("\n")
+                               if stop_or_continue(st.session_state.all_concepts) > 3:
+                                  st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
+                                  st.session_state.log_buffer.write("\n")
+                                  stop_button = st.button("Stop the conversation.", on_click=stop_button)
+      
+                            else:
+                               if stop_or_continue(st.session_state.all_concepts) > 3:
+                                  sentence = high_level_praise_advice(st.session_state.user_high,concept_definitions_dict)
+                                  generic_advice_assess_concepts(sentence,concept_name=lowest_concept,user_prompt=user_prompt,chat_history=chat_history)
+                                  st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
+                                  st.session_state.log_buffer.write("\n")
+                                  stop_button = st.button("Stop the conversation.", on_click=stop_button)
+                                  
+                               else:
+                                  assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                                  st.session_state.asked_concepts.append(lowest_concept)
+                                  st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
+                                  st.session_state.log_buffer.write("\n")
 
 elif st.session_state.experiment_condition == 2:
 
