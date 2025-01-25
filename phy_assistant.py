@@ -503,6 +503,18 @@ def high_level_praise_advice(user_high,concept_definitions):
    return full_sentence
 
 
+def continue_the_conversation():
+   continue_prompt = f"Respond to the user's input : {user_prompt} with a friendly and relevant acknowledgement. If the user's input includes a question or request for clarification, address it directly. If the input is related to physical activity, ask a follow up question to continue the conversation. If the input is unrelated to physical activity, acknowledge it and steer conversation naturally towards discussing physical activity. Do not make assumptions about the user solely based on their input. Use relevant parts of the chat history : {chat_history} for context, but do not repeat yourself word-for-word. Make sure your response builds on the past conversations and adds new insights. Keep your response concise ideally under 250 tokens, while maintaining a complete thought."
+   completion = client.chat.completions.create(model="gpt-4o-mini",messages=[{
+      "role":"assistant",
+      "content":continue_prompt
+   }])
+
+   response = completion.choices[0].message.content
+   st.session_state.log_buffer.write(f"CONTINUE THE CONVERSATION PROMPT : {continue_prompt}\n")
+   st.session_state.log_buffer.write("\n")
+
+
 
 def generic_advice_assess_concepts(high_level_praise_sent,concept_name,user_prompt,chat_history):
    """This function gets the output from the high_level_praise_advice function"""
