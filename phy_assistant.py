@@ -513,6 +513,11 @@ def continue_the_conversation():
    response = completion.choices[0].message.content
    st.session_state.log_buffer.write(f"CONTINUE THE CONVERSATION PROMPT : {continue_prompt}\n")
    st.session_state.log_buffer.write("\n")
+   with st.chat_message("assistant"):
+       response = st.write_stream(generate_response(response))
+       st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
+       st.session_state.log_buffer.write("\n")
+       st.session_state.messages.append({"role": "assistant", "content": response})
 
 
 
