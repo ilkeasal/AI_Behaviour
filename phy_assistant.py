@@ -447,7 +447,7 @@ def stop_or_continue(a_dict):
    return total_num
 
 def submit_submit_function():
-   st.session_state.start_experiment = "experiment"
+   #st.session_state.start_experiment = "experiment"
    st.session_state.log_buffer.write("PHY ASSESSMENT!\n")
    st.session_state.log_buffer.write(f"Gender input : {gender_input}\n")
    st.session_state.log_buffer.write(f"Days input : {days_input}\n")
@@ -464,6 +464,9 @@ def submit_submit_function():
        st.session_state.log_buffer.write("ACTIVE\n")
    else:
        st.session_state.log_buffer.write("NOT ACTIVE\n")
+
+   if gender_input and days_input and strength_input and importance_input and motivation_input:
+      st.session_state.start_experiment = "experiment"
 
    st.session_state.log_buffer.write(f"Pre-experiment questions completed : {adjusted_time}\n")
    st.session_state.log_buffer.write(f"\n")
