@@ -430,7 +430,6 @@ def level_check_after_validation(user_answer, last_asked_concept):
 
 
 def stop_button():
-   st.balloons()
    st.session_state.log_buffer.write(f"STOP BUTTON PRESSED! : {adjusted_time}\n")
    st.session_state.log_buffer.write("\n")
    st.session_state.start_experiment = "post-survey"
@@ -472,6 +471,7 @@ def submit_submit_function():
    st.session_state.log_buffer.write(f"\n")
 
 def post_survey_submit():
+   st.balloons()
    st.session_state.log_buffer.write("Post Survey Results : \n")
    st.session_state.log_buffer.write(f"Question 1 answer : {question1}\n")
    st.session_state.log_buffer.write(f"Question 2 answer : {question2}\n")
