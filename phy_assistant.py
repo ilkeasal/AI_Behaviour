@@ -770,8 +770,8 @@ if st.session_state.experiment_condition == 1:
           print(f"This is the construct name level : {construct_name_level}")
           st.session_state.log_buffer.write(f"LEVEL OF CONCEPT : {construct_name_level}\n")
    
-          #if len(chat_history) > 25:
-              #chat_history = chat_history[10:]
+          if len(chat_history) > 25:
+              chat_history = chat_history[5:]
    
           if st.session_state.question_validation:
               if st.session_state.last_asked_concept == construct_prompt:  # We do not need to validate
