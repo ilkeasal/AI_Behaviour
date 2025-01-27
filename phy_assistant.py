@@ -622,9 +622,9 @@ if "all_known_concepts" not in st.session_state:
       #st.session_state.log_buffer.write("\n")
 
 if "experiment_condition" not in st.session_state: #### TEMPORARY EXPERIMENT CONDITION , 1 indicates experiment, 2 indicates control
-   st.session_state.experiment_condition = 2
-   #st.session_state.log_buffer.write("Experiment Condition : 1")
-   st.session_state.log_buffer.write("Control Condition : 2")
+   st.session_state.experiment_condition = 1
+   st.session_state.log_buffer.write("Experiment Condition : 1")
+   #st.session_state.log_buffer.write("Control Condition : 2")
       
 
 if st.session_state.start_experiment =="consent":
