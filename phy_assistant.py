@@ -612,19 +612,19 @@ if "save_conversation" not in st.session_state:
 if "all_known_concepts" not in st.session_state:
    st.session_state.all_known_concepts = {"concepts":{}}
 
-#if "experiment_condition" not in st.session_state:
-   #st.session_state.experiment_condition = random.choice([1,2])
-   #if st.session_state.experiment_condition == 1:
-      #st.session_state.log_buffer.write(" 1 : EXPERIMENT CONDITION \n")
-      #st.session_state.log_buffer.write("\n")
-   #else:
-      #st.session_state.log_buffer.write(" 2 : CONTROL CONDITION \n")
-      #st.session_state.log_buffer.write("\n")
+if "experiment_condition" not in st.session_state:
+   st.session_state.experiment_condition = random.choice([1,2])
+   if st.session_state.experiment_condition == 1:
+      st.session_state.log_buffer.write(" 1 : EXPERIMENT CONDITION \n")
+      st.session_state.log_buffer.write("\n")
+   else:
+      st.session_state.log_buffer.write(" 2 : CONTROL CONDITION \n")
+      st.session_state.log_buffer.write("\n")
 
-if "experiment_condition" not in st.session_state: #### TEMPORARY EXPERIMENT CONDITION , 1 indicates experiment, 2 indicates control
-   st.session_state.experiment_condition = 1
-   st.session_state.log_buffer.write("Experiment Condition :")
-   st.session_state.log_buffer.write("PILOT STUDY\n")
+#if "experiment_condition" not in st.session_state: #### TEMPORARY EXPERIMENT CONDITION , 1 indicates experiment, 2 indicates control
+   #st.session_state.experiment_condition = 1
+   #st.session_state.log_buffer.write("Experiment Condition :")
+   #st.session_state.log_buffer.write("PILOT STUDY\n")
    #st.session_state.log_buffer.write("Control Condition : 2")
       
 
