@@ -1631,6 +1631,7 @@ if st.session_state.experiment_condition == 1:
                        
                     else:
                        st.write("Validation question : no")
+                       clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
                        
                        
 
