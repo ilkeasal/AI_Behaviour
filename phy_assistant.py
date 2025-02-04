@@ -1379,6 +1379,7 @@ if st.session_state.experiment_condition == 1:
               if st.session_state.random_asked_concept_validation: 
                  if st.session_state.random_asked_concept == construct_prompt: 
                     st.write("QUESTION VALIDATION IS NOT NECESSARY")
+                    st.session_state.random_concept_validation_repeat = 0
                     st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
                     #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                     st.session_state.random_asked_concept_validation = False 
@@ -1510,12 +1511,14 @@ if st.session_state.experiment_condition == 1:
                     st.write("QUESTION VALIDATION IS NECESSARY!")
                     st.write(st.session_state.random_asked_concept)
                     st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
+                    st.session_state.random_concept_validation_repeat +=1
                     response = validation_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
                     if "yes" in response: 
                        st.write("Validation question : yes")
                        level = level_check_after_validation(user_answer = chat_history[-1],last_asked_concept = st.session_state.random_asked_concept)
                        #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                        st.session_state.random_asked_concept_validation = False 
+                       st.session_state.random_concept_validation_repeat = 0
                        if "Low" in level:
                             st.session_state.main_problem_concept = st.session_state.random_asked_concept
                             st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
@@ -1634,7 +1637,13 @@ if st.session_state.experiment_condition == 1:
                        
                     else:
                        st.write("Validation question : no")
-                       clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
+                       if st.session_state.random_concept_validation_repeat < 3:
+                          clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
+
+                       else:
+                          st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
+                          # find a new lowest concept and update random_asked_concept
+                          
                        
                        
 
