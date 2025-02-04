@@ -1639,7 +1639,7 @@ if st.session_state.experiment_condition == 1:
                        if st.session_state.random_concept_validation_repeat < 3:
                           st.session_state.random_concept_validation_repeat +=1
                           clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
-                          st.session_state.
+                     
 
                        else:
                           st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
