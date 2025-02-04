@@ -159,14 +159,11 @@ def generate_response(response):
 
 def choose_lowest_concept(my_dict):
    """Chooses the concept that is talked about the least"""
-   number = 10000
-   for x in my_dict.keys():
-       num = my_dict[x]
-       if num <= number:
-           number = num
-           name_of_concept = x
+   lowest_concepts_dict = {key:val for key,val in my_dict.items() if val==min(my_dict.values())}
 
-   return name_of_concept
+    list_of_lowest_concepts = [key for key in lowest_concepts_dict.keys()]
+
+    return(random.choice(list_of_lowest_concepts))
 
 
 def adjust_value_property(llm_answer):
