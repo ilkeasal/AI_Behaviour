@@ -1507,6 +1507,11 @@ if st.session_state.experiment_condition == 1:
                     st.write("QUESTION VALIDATION IS NECESSARY!")
                     st.write(st.session_state.random_asked_concept)
                     st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
+                    response = validation_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
+                    if "yes" in response: 
+                       st.write("Validation question : yes")
+                    else:
+                       st.write("Validation question : no")
 
 
 
