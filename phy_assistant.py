@@ -1511,7 +1511,6 @@ if st.session_state.experiment_condition == 1:
                     st.write("QUESTION VALIDATION IS NECESSARY!")
                     st.write(st.session_state.random_asked_concept)
                     st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
-                    st.session_state.random_concept_validation_repeat +=1
                     response = validation_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
                     if "yes" in response: 
                        st.write("Validation question : yes")
@@ -1638,10 +1637,17 @@ if st.session_state.experiment_condition == 1:
                     else:
                        st.write("Validation question : no")
                        if st.session_state.random_concept_validation_repeat < 3:
+                          st.session_state.random_concept_validation_repeat +=1
                           clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
+                          st.session_state.
 
                        else:
                           st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
+                          st.session_state.random_concept_validation_repeat = 0
+                          lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                          assess_concepts_prompt(concept_name=lowest_concept, user_prompt = user_prompt, chat_history = chat_history)
+                          st.session_state.random_asked_concept = lowest_concept
+                          st.session_state.random_asked_concept_validation = True
                           # find a new lowest concept and update random_asked_concept
                           
                        
