@@ -1418,7 +1418,7 @@ if st.session_state.experiment_condition == 1:
                              assess_concepts_prompt(concept_name=st.session_state.last_asked_key, user_prompt=user_prompt,
                                                     chat_history=chat_history)
                             
-                   else:
+                     else:
                          st.session_state.main_problem_concept = concept_level
                          st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                          st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1493,6 +1493,8 @@ if st.session_state.experiment_condition == 1:
                                      st.session_state.asked_concepts.append(lowest_concept)
                                      st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                      st.session_state.log_buffer.write("\n")
+                        
+                         
                       
                          
                       
