@@ -1521,6 +1521,7 @@ if st.session_state.experiment_condition == 1:
                         st.session_state.log_buffer.write(f"Chosen prompt is : {chosen_prompt}\n")
                         st.session_state.log_buffer.write("\n")
                         lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                        st.session_state.random_asked_concept = lowest_concept
                         st.session_state.random_asked_concept_validation = True
                         st.session_state.log_buffer.write(f"Chosen lowest concept : {lowest_concept}\n")
                         if st.session_state.asked_concepts.count(lowest_concept) > 2:
