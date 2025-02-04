@@ -1377,7 +1377,7 @@ if st.session_state.experiment_condition == 1:
                  if st.session_state.random_asked_concept == construct_prompt: 
                     st.write("QUESTION VALIDATION IS NOT NECESSARY")
                     st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
-                    st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
+                    #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                     st.session_state.random_asked_concept_validation = False 
                     if "Low" in construct_name_level:
                          st.session_state.main_problem_concept = st.session_state.random_asked_concept
@@ -1511,7 +1511,7 @@ if st.session_state.experiment_condition == 1:
                     if "yes" in response: 
                        st.write("Validation question : yes")
                        level = level_check_after_validation(user_answer = chat_history[-1],last_asked_concept = st.session_state.random_asked_concept)
-                       st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
+                       #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                        st.session_state.random_asked_concept_validation = False 
                        if "Low" in level:
                             st.session_state.main_problem_concept = st.session_state.random_asked_concept
