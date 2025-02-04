@@ -1374,6 +1374,7 @@ if st.session_state.experiment_condition == 1:
    
           else:  # if question validation is not necessary
               if random_asked_question_validation: 
+                 st.write("QUESTION VALIDATION!")
 
 
 
