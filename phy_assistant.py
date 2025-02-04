@@ -1505,6 +1505,7 @@ if st.session_state.experiment_condition == 1:
                     
                  else:
                     st.write("QUESTION VALIDATION IS NECESSARY!")
+                    st.write({st.session_state.random_asked_concept})
                     st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
 
 
