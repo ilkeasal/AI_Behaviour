@@ -609,6 +609,12 @@ if "save_conversation" not in st.session_state:
 if "all_known_concepts" not in st.session_state:
    st.session_state.all_known_concepts = {"concepts":{}}
 
+if "random_asked_concept" not in st.session_state: # ADDED NEW TO SEE WHICH CONCEPT IS BEING ASKED (CHOSEN RANDOMLY) - 4th of Feb
+   st.session_state.random_concept = str()
+
+if "random_asked_concept_validation" not in st.session_state: # ADDED NEW TO SEE IF THE CONCEPT IS BEING VALIDATED. - 4th of Feb
+   st.session_state.random_asked_concept_validation = False
+
 if "experiment_condition" not in st.session_state:
    st.session_state.experiment_condition = random.choice([1,2])
    if st.session_state.experiment_condition == 1:
