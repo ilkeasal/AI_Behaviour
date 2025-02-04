@@ -610,7 +610,7 @@ if "all_known_concepts" not in st.session_state:
    st.session_state.all_known_concepts = {"concepts":{}}
 
 if "random_asked_concept" not in st.session_state: # ADDED NEW TO SEE WHICH CONCEPT IS BEING ASKED (CHOSEN RANDOMLY) - 4th of Feb
-   st.session_state.random_concept = str()
+   st.session_state.random_asked_concept = str()
 
 if "random_asked_concept_validation" not in st.session_state: # ADDED NEW TO SEE IF THE CONCEPT IS BEING VALIDATED. - 4th of Feb
    st.session_state.random_asked_concept_validation = False
