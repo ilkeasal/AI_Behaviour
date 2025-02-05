@@ -1465,6 +1465,7 @@ if st.session_state.experiment_condition == 1:
                               if st.session_state.advice_given:
                                  assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                                  st.session_state.random_asked_concept_validation = True
+                                 st.session_state.random_asked_concept = lowest_concept
                                  st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                  st.session_state.log_buffer.write("\n")
                                  if stop_or_continue(st.session_state.all_concepts) > 4:
@@ -1482,6 +1483,7 @@ if st.session_state.experiment_condition == 1:
                                       
                                  else:
                                     assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                                    st.session_state.random_asked_concept = lowest_concept
                                     st.session_state.random_asked_concept_validation = True
                                     st.session_state.asked_concepts.append(lowest_concept)
                                     st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1492,6 +1494,7 @@ if st.session_state.experiment_condition == 1:
                               if st.session_state.advice_given:
                                  assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                                  st.session_state.random_asked_concept_validation = True
+                                 st.session_state.random_asked_concept = lowest_concept
                                  st.session_state.asked_concepts.append(lowest_concept)
                                  st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                  st.session_state.log_buffer.write("\n")
@@ -1512,6 +1515,7 @@ if st.session_state.experiment_condition == 1:
                                  else:
                                     assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                                     st.session_state.random_asked_concept_validation = True
+                                    st.session_state.random_asked_concept = lowest_concept
                                     st.session_state.asked_concepts.append(lowest_concept)
                                     st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                     st.session_state.log_buffer.write("\n")
@@ -1599,6 +1603,7 @@ if st.session_state.experiment_condition == 1:
                                                                       i != lowest_concept]
                                  st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
                                  lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                                 st.session_state.random_asked_concept = lowest_concept
                                  st.session_state.asked_concepts.append(lowest_concept)
                                  st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
                                  if st.session_state.advice_given:
@@ -1631,6 +1636,7 @@ if st.session_state.experiment_condition == 1:
                                  if st.session_state.advice_given:
                                     assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                                     st.session_state.random_asked_concept_validation = True
+                                    st.session_state.random_asked_concept = lowest_concept
                                     st.session_state.asked_concepts.append(lowest_concept)
                                     st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                                     st.session_state.log_buffer.write("\n")
@@ -1650,6 +1656,7 @@ if st.session_state.experiment_condition == 1:
                                         
                                     else:
                                        assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                                       st.session_state.random_asked_concept = lowest_concept
                                        st.session_state.random_asked_concept_validation = True
                                        st.session_state.asked_concepts.append(lowest_concept)
                                        st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1668,6 +1675,7 @@ if st.session_state.experiment_condition == 1:
                           st.session_state.random_concept_validation_repeat = 0
                           lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
                           assess_concepts_prompt(concept_name=lowest_concept, user_prompt = user_prompt, chat_history = chat_history)
+                          st.session_state.random_asked_concept = lowest_concept
                           st.session_state.random_asked_concept_validation = True
                           st.session_state.random_asked_concept = lowest_concept
                           st.session_state.random_asked_concept_validation = True
@@ -1698,6 +1706,7 @@ if st.session_state.experiment_condition == 1:
                             st.session_state.asked_concepts = [i for i in st.session_state.asked_concepts if i != lowest_concept]
                             st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
                             lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                            st.session_state.random_asked_concept = lowest_concept
                             st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
                             st.session_state.asked_concepts.append(lowest_concept)
                             if st.session_state.advice_given:
@@ -1732,6 +1741,7 @@ if st.session_state.experiment_condition == 1:
                         else:
                             assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
                             st.session_state.random_asked_concept_validation = True
+                            st.session_state.random_asked_concept = lowest_concept
                             st.session_state.asked_concepts.append(lowest_concept)
                             st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
                             st.session_state.log_buffer.write("\n")
@@ -1808,6 +1818,7 @@ if st.session_state.experiment_condition == 1:
                                                                    i != lowest_concept]
                                 st.session_state.log_buffer.write(f"New asked concepts : {st.session_state.asked_concepts}\n")
                                 lowest_concept = choose_lowest_concept(st.session_state.all_concepts)
+                                st.session_state.random_asked_concept = lowest_concept
                                 st.session_state.asked_concepts.append(lowest_concept)
                                 st.session_state.log_buffer.write(f"New chosen lowest concept : {lowest_concept}\n")
                                 if st.session_state.advice_given:
@@ -1858,6 +1869,7 @@ if st.session_state.experiment_condition == 1:
                                      
                                   else:
                                      assess_concepts_prompt(lowest_concept, user_prompt=user_prompt, chat_history=chat_history)
+                                     st.session_state.random_asked_concept = lowest_concept
                                      st.session_state.random_asked_concept_validation = True
                                      st.session_state.asked_concepts.append(lowest_concept)
                                      st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
