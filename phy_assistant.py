@@ -547,6 +547,18 @@ def generic_advice_assess_concepts(high_level_praise_sent,concept_name,user_prom
       st.session_state.messages.append({"role": "assistant", "content": response})
 
 
+st.markdown(
+    """
+    <style>
+   div[data-testid="stStatusWidget"] div button {
+        display: none;
+        }
+        </style>
+""",
+    unsafe_allow_html=True,
+)
+
+
 
 ## Streamlit Initialization
 
