@@ -458,6 +458,8 @@ def submit_submit_function():
    st.session_state.log_buffer.write("\n")
    if total_activity_levels >=150 and strength_input>=2:
        st.session_state.log_buffer.write("ACTIVE\n")
+   elif total_activity_level >=150 and strength_input<2:
+      st.session_state.log_buffer.write("ACTIVE BUT NOT ENOUGH STRENGTH TRAINING\n")
    else:
        st.session_state.log_buffer.write("NOT ACTIVE\n")
 
