@@ -18,7 +18,16 @@ from datetime import datetime
 current_time = datetime.now()
 adjusted_time = current_time.strftime("%d:%m:%y %H:%M")
 
-
+st.markdown(
+    """
+    <style>
+   div[data-testid="stStatusWidget"] div button {
+        display: none;
+        }
+        </style>
+""",
+    unsafe_allow_html=True,
+)
 
 survey = ss.StreamlitSurvey()
 
@@ -545,18 +554,6 @@ def generic_advice_assess_concepts(high_level_praise_sent,concept_name,user_prom
       st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
       st.session_state.log_buffer.write("\n")
       st.session_state.messages.append({"role": "assistant", "content": response})
-
-
-st.markdown(
-    """
-    <style>
-   div[data-testid="stStatusWidget"] div button {
-        display: none;
-        }
-        </style>
-""",
-    unsafe_allow_html=True,
-)
 
 
 
