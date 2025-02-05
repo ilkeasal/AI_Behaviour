@@ -1389,9 +1389,10 @@ if st.session_state.experiment_condition == 1:
           else:  # if question validation is not necessary
               if st.session_state.random_asked_concept_validation: 
                  if st.session_state.random_asked_concept == construct_prompt: 
-                    st.write("QUESTION VALIDATION IS NOT NECESSARY")
+                    st.session_state.log_buffer.write("RANDOM ASKED CONCEPT VALIDATION IS NOT NECESSARY.\n")
+                    st.session_state.log_buffer.write(f"{st.session_state.random_asked_concept}=={construct_prompt}\n")
+                    st.session_state.log_buffer.write("\n")
                     st.session_state.random_concept_validation_repeat = 0
-                    st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
                     #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                     st.session_state.random_asked_concept_validation = False 
                     if "Low" in construct_name_level:
@@ -1519,9 +1520,9 @@ if st.session_state.experiment_condition == 1:
                         
                     
                  else:
-                    st.write("QUESTION VALIDATION IS NECESSARY!")
-                    st.write(st.session_state.random_asked_concept)
-                    st.write(f"{st.session_state.random_asked_concept} != {construct_prompt}")
+                    st.session_state.log_buffer.write("RANDOM ASKED CONCEPT VALIDATION IS NECESSARY.\n")
+                    st.session_state.log_buffer.write(f"{st.session_state.random_asked_concept}!={construct_prompt}\n")
+                    st.session_state.log_buffer.write("\n")
                     response = validation_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
                     if "yes" in response: 
                        st.write("Validation question : yes")
@@ -1646,7 +1647,8 @@ if st.session_state.experiment_condition == 1:
                                        st.session_state.log_buffer.write("\n")
                        
                     else:
-                       st.write("Validation question : no")
+                       st.session_state.log_buffer.write(f"Validation Question answer : NO - {response}\n")
+                       st.session_state.log_buffer.write("\n")
                        if st.session_state.random_concept_validation_repeat < 3:
                           st.session_state.random_concept_validation_repeat +=1
                           clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
