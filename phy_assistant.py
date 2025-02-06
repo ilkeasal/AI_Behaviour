@@ -686,6 +686,7 @@ if st.session_state.start_experiment=="pre-survey":
    strength_input = st.number_input("On average, how many days a week do you perform muscle strengthening exercises, such as body weight exercises or resistance training?",min_value=0, max_value=7)
    importance_input = survey.select_slider("How important is physical activity in your life? (The options are : Not important, Slightly important, Moderately important, Important, and, Very important)", options=["Not important","Slightly important","Moderately important","Important","Very important"], id= "Q5")
    motivation_input = survey.select_slider("How motivated are you to maintain or enhance your physical activity level? (The options are : Not motivated, Slightly motivated, Moderately motivated, Motivated, and, Very motivated.)", options = ["Not motivated","Slightly motivated","Moderately motivated","Motivated","Very motivated"],id="Q6")
+   support_input = survey.select_slider("How do you feel about receiving support to become more physically active? (The options are : Strongly opposed, Somewhat opposed, Neutral, Somewhat open, and Strongly open.)", options = ["Strongly opposed","Somewhat opposed","Neutral","Somewhat open","Strongly open"],id="Q7")
    #st.markdown(f"""
        #* Number of days: {days_input}
        #* Number of minutes: {hours_input}
