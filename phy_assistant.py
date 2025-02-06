@@ -681,8 +681,8 @@ if st.session_state.start_experiment=="pre-survey":
    }
    chatbot_use= st.radio("How often do you use chatbots? (For example, AI-based chatbots like ChatGPT that can engage in a conversation with you.) ", options.keys(),index=None,format_func=lambda x:options[x])
    #st.session_state.log_buffer.write(f"Chatbot user experience : {response} \n")
-   days_input = st.number_input("On average, how many days per week do you engage in moderate to strenuous exercise?", min_value=0,max_value=7)
-   hours_input = st.number_input("On average, how many minutes do you engage in exercise at this level?",min_value=0,max_value=240)
+   days_input = st.number_input("On average, how many days per week do you engage in moderate to vigorous physical activity? (This includes activities such as exercise, active commuting (e.g., walking or cycling to work), physically demanding tasks at work, sports, or any other activities, as long as they are moderate to vigorous physical activity.)", min_value=0,max_value=7)
+   hours_input = st.number_input("On average, how many minutes per day do you engage in exercise at this level?",min_value=0,max_value=240)
    strength_input = st.number_input("On average, how many days a week do you perform muscle strengthening exercises, such as body weight exercises or resistance training?",min_value=0, max_value=7)
    importance_input = survey.select_slider("How important is physical activity in your life? (The options are : Not important, Slightly important, Moderately important, Important, and, Very important)", options=["Not important","Slightly important","Moderately important","Important","Very important"], id= "Q5")
    motivation_input = survey.select_slider("How motivated are you to maintain or enhance your physical activity level? (The options are : Not motivated, Slightly motivated, Moderately motivated, Motivated, and, Very motivated.)", options = ["Not motivated","Slightly motivated","Moderately motivated","Motivated","Very motivated"],id="Q6")
