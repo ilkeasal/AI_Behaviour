@@ -1535,7 +1535,6 @@ if st.session_state.experiment_condition == 1:
                     st.session_state.log_buffer.write("\n")
                     response = validation_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
                     if "yes" in response: 
-                       st.write("Validation question : yes")
                        level = level_check_after_validation(user_answer = chat_history[-1],last_asked_concept = st.session_state.random_asked_concept)
                        #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                        st.session_state.random_asked_concept_validation = False 
