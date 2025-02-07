@@ -1045,7 +1045,7 @@ if st.session_state.experiment_condition == 1:
                   print(f"Validation repeat: {st.session_state.validation_repeat}")
                   st.session_state.log_buffer.write(f"Validation repeat: {st.session_state.validation_repeat}\n")
                   st.session_state.log_buffer.write("\n")
-                  if st.session_state.validation_repeat < 3:
+                  if st.session_state.validation_repeat < 2:
                       response = validation_question(last_asked_concept=st.session_state.last_asked_concept,
                                                      chat_history=chat_history)
                       print(response)
@@ -1669,7 +1669,7 @@ if st.session_state.experiment_condition == 1:
                     else:
                        st.session_state.log_buffer.write(f"Validation Question answer : NO - {response}\n")
                        st.session_state.log_buffer.write("\n")
-                       if st.session_state.random_concept_validation_repeat < 3:
+                       if st.session_state.random_concept_validation_repeat < 2:
                           st.session_state.random_concept_validation_repeat +=1
                           clarification_question(last_asked_concept=st.session_state.random_asked_concept,chat_history=chat_history)
                      
