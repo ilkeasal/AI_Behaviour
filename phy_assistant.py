@@ -1796,7 +1796,7 @@ if st.session_state.experiment_condition == 1:
                              st.session_state.users_level = initialize_users_level_dict(st.session_state.unstable_concept_dict)
                              print(f"The users level dictionary : {st.session_state.users_level}")
                              st.session_state.problematic_sentence = chat_history[-1]
-                             st.session_state.log_buffer.write("Problematic sentence : {st.session_state.problematic_sentence}")
+                             st.session_state.log_buffer.write(f"Problematic sentence : {st.session_state.problematic_sentence}")
                              st.write(st.session_state.problematic_sentence)
                              st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                              # Now ask a question about the first key in that dictionary.
