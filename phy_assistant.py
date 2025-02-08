@@ -629,6 +629,9 @@ if "random_asked_concept_validation" not in st.session_state: # ADDED NEW TO SEE
 if "random_concept_validation_repeat" not in st.session_state:
    st.session_state.random_concept_validation_repeat = int()
 
+if "problematic_sentence" not in st.session_state:
+    st.session_state.problematic_sentence = str()
+
 if "experiment_condition" not in st.session_state:
    st.session_state.experiment_condition = random.choice([1,2])
    if st.session_state.experiment_condition == 1:
@@ -1397,6 +1400,7 @@ if st.session_state.experiment_condition == 1:
                     #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                     st.session_state.random_asked_concept_validation = False 
                     if "Low" in construct_name_level or "low" in construct_name_level:
+                         st.session_state.problematic_sentence = chat_history[-1]
                          st.session_state.main_problem_concept = st.session_state.random_asked_concept
                          st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                          st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1541,6 +1545,7 @@ if st.session_state.experiment_condition == 1:
                        st.session_state.random_asked_concept_validation = False 
                        st.session_state.random_concept_validation_repeat = 0
                        if "Low" in level or "low" in level:
+                            st.session_state.problematic_sentence = chat_history[-1]
                             st.session_state.main_problem_concept = st.session_state.random_asked_concept
                             st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                             st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
