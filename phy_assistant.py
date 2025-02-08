@@ -1400,7 +1400,6 @@ if st.session_state.experiment_condition == 1:
                     #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                     st.session_state.random_asked_concept_validation = False 
                     if "Low" in construct_name_level or "low" in construct_name_level:
-                         st.session_state.problematic_sentence = chat_history[-1]
                          st.session_state.main_problem_concept = st.session_state.random_asked_concept
                          st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                          st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1427,6 +1426,8 @@ if st.session_state.experiment_condition == 1:
                          else:  # If the dictionary is not empty and hence there are has_effect_relations to further ask a question about.
                              st.session_state.users_level = initialize_users_level_dict(st.session_state.unstable_concept_dict)
                              print(f"The users level dictionary : {st.session_state.users_level}")
+                             st.session_state.problematic_sentence = chat_history[-1]
+                             st.session_state.log_buffer.write(f"Problematic sentence : {st.session_state.problematic_sentence}")
                              st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                              # Now ask a question about the first key in that dictionary.
                              st.session_state.last_asked_key = next(iter(st.session_state.unstable_concept_dict))
@@ -1534,7 +1535,7 @@ if st.session_state.experiment_condition == 1:
                    
                         
                     
-                 else:
+                 else: # if random_asked_concept != construct_prompt
                     st.session_state.log_buffer.write("RANDOM ASKED CONCEPT VALIDATION IS NECESSARY.\n")
                     st.session_state.log_buffer.write(f"{st.session_state.random_asked_concept}!={construct_prompt}\n")
                     st.session_state.log_buffer.write("\n")
@@ -1545,7 +1546,6 @@ if st.session_state.experiment_condition == 1:
                        st.session_state.random_asked_concept_validation = False 
                        st.session_state.random_concept_validation_repeat = 0
                        if "Low" in level or "low" in level:
-                            st.session_state.problematic_sentence = chat_history[-1]
                             st.session_state.main_problem_concept = st.session_state.random_asked_concept
                             st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                             st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1571,6 +1571,8 @@ if st.session_state.experiment_condition == 1:
                             else:  # If the dictionary is not empty and hence there are has_effect_relations to further ask a question about.
                                 st.session_state.users_level = initialize_users_level_dict(st.session_state.unstable_concept_dict)
                                 print(f"The users level dictionary : {st.session_state.users_level}")
+                                st.session_state.problematic_sentence = chat_history[-1]
+                                st.session_state.log_buffer.write(f"Problematic sentence : {st.session_state.problematic_sentence}")
                                 st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
                                 # Now ask a question about the first key in that dictionary.
                                 st.session_state.last_asked_key = next(iter(st.session_state.unstable_concept_dict))
