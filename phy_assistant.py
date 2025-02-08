@@ -811,7 +811,7 @@ if st.session_state.experiment_condition == 1:
                       st.session_state.log_buffer.write("VALIDATED A KEY.\n")
                       st.session_state.log_buffer.write("\n")
    
-                      if "Low" in construct_name_level:
+                      if "Low" in construct_name_level or "low" in construct_name_level:
                           st.session_state.users_level[st.session_state.last_asked_concept]["status"] = "Low"
                           print(st.session_state.users_level)
                           st.session_state.log_buffer.write(f"USERS LEVEL : {st.session_state.users_level}\n")
@@ -911,7 +911,7 @@ if st.session_state.experiment_condition == 1:
                   else:  # if we are validating a value
                       print("What we have just validated is a value")
                       st.session_state.log_buffer.write("VALIDATED A VALUE! \n")
-                      if "Low" in construct_name_level:
+                      if "Low" in construct_name_level or "low" in construct_name_level:
                           st.session_state.users_level[st.session_state.last_asked_key]["dependencies"][
                               st.session_state.last_asked_concept]["status"] = "Low"
                           st.session_state.unstable_concept_dict[st.session_state.last_asked_key].remove(
@@ -1063,7 +1063,7 @@ if st.session_state.experiment_condition == 1:
                           st.session_state.log_buffer.write(
                               f"After the evaluation the level of the user on the concept is : {level}\n")
                           st.session_state.log_buffer.write("\n")
-                          if "low" in level:
+                          if "low" in level or "Low" in level:
                               if st.session_state.its_key:  # if what we have validated was a key.
                                   st.session_state.users_level[st.session_state.last_asked_concept]["status"] = "Low"
                                   print(f"Low was in the concept, users level are {st.session_state.users_level}")
@@ -1396,7 +1396,7 @@ if st.session_state.experiment_condition == 1:
                     st.session_state.random_concept_validation_repeat = 0
                     #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                     st.session_state.random_asked_concept_validation = False 
-                    if "Low" in construct_name_level:
+                    if "Low" in construct_name_level or "low" in construct_name_level:
                          st.session_state.main_problem_concept = st.session_state.random_asked_concept
                          st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                          st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1540,7 +1540,7 @@ if st.session_state.experiment_condition == 1:
                        #st.session_state.all_concepts[st.session_state.random_asked_concept] += 1
                        st.session_state.random_asked_concept_validation = False 
                        st.session_state.random_concept_validation_repeat = 0
-                       if "Low" in level:
+                       if "Low" in level or "low" in level:
                             st.session_state.main_problem_concept = st.session_state.random_asked_concept
                             st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                             st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
@@ -1759,7 +1759,7 @@ if st.session_state.experiment_condition == 1:
       
                  else:  # If concept level equals to one of the concepts.
                      print(f"The identified concept is {concept_level}")
-                     if "Low" in construct_name_level:
+                     if "Low" in construct_name_level or "low" in construct_name_level:
                          st.session_state.main_problem_concept = concept_level
                          st.session_state.all_concepts[st.session_state.main_problem_concept] += 1
                          st.session_state.log_buffer.write(f"ALL CONCEPTS : {st.session_state.all_concepts}\n")
