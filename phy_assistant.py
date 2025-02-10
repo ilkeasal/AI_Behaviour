@@ -768,7 +768,7 @@ if st.session_state.experiment_condition == 1:
                   construct_prompt = completion.choices[0].message.content
                   construct_prompt = construct_prompt.lower()
                   print(construct_prompt)
-                  if none of the above not in construct_prompt:
+                  if "none of the above" not in construct_prompt:
                       completion = client.chat.completions.create(
                           model="gpt-4o-mini",
                           messages=[
