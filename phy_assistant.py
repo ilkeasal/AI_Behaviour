@@ -785,8 +785,9 @@ if st.session_state.experiment_condition == 1:
        
                       print(construct_name_level)  # returns Low/High {construct_name}
                   
-                   else:
-                       construct_name_level = "None of the above."
+                  else:
+                      construct_name_level = "None of the above."
+                       
 
               
    
