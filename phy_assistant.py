@@ -768,21 +768,27 @@ if st.session_state.experiment_condition == 1:
                   construct_prompt = completion.choices[0].message.content
                   construct_prompt = construct_prompt.lower()
                   print(construct_prompt)
-                  completion = client.chat.completions.create(
-                      model="gpt-4o-mini",
-                      messages=[
-                          {
-                              "role": "assistant",
-                              "content": f"""Based on the user's input : {user_prompt}, decide if the level of {construct_prompt} about physical activity is 'Low' or 'High'.
-                                                   A 'High' level indicates that the user demonstrates a strong, consistent, or positive engagement with the concept {construct_prompt}. {construct_prompt} {concept_definitions_dict[construct_prompt]}.
-                                                   A 'Low' level indicates minimal, inconsistent, or negative engagement with the concept.
-                                                   ONLY return 'Low {construct_prompt}' or 'High {construct_prompt}', with NO explanation or extra details."""
-                          }
-                      ]
-                  )
-                  construct_name_level = completion.choices[0].message.content
-   
-                  print(construct_name_level)  # returns Low/High {construct_name}
+                  if none of the above not in construct_prompt:
+                      completion = client.chat.completions.create(
+                          model="gpt-4o-mini",
+                          messages=[
+                              {
+                                  "role": "assistant",
+                                  "content": f"""Based on the user's input : {user_prompt}, decide if the level of {construct_prompt} about physical activity is 'Low' or 'High'.
+                                                       A 'High' level indicates that the user demonstrates a strong, consistent, or positive engagement with the concept {construct_prompt}. {construct_prompt} {concept_definitions_dict[construct_prompt]}.
+                                                       A 'Low' level indicates minimal, inconsistent, or negative engagement with the concept.
+                                                       ONLY return 'Low {construct_prompt}' or 'High {construct_prompt}', with NO explanation or extra details."""
+                              }
+                          ]
+                      )
+                      construct_name_level = completion.choices[0].message.content
+       
+                      print(construct_name_level)  # returns Low/High {construct_name}
+                  
+                   else:
+                       construct_name_level = "None of the above."
+
+              
    
           concept_level = adjust_value_property(
               construct_name_level)  # this either returns the name of the concept, or no concept.
