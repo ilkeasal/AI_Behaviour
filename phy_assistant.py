@@ -1951,7 +1951,7 @@ elif st.session_state.experiment_condition == 2:
             st.session_state.messages.append({"role":"assistant","content":response})
 
 
-         if len(chat_history) > 11: #Mean from the pilot study was 12
+         if len(chat_history) > 26: #Mean from the pilot study was 12
             st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
             st.session_state.log_buffer.write("\n")
             stop_button = st.button("Stop the conversation.", on_click=stop_button)
