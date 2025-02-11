@@ -487,7 +487,7 @@ def post_survey_submit():
    st.session_state.log_buffer.write(f"Question 4 answer : {question4}\n")
    st.session_state.log_buffer.write(f"Post-experiment questions completed : {adjusted_time}\n")
    st.session_state.log_buffer.write("\n")
-   st.session_state.log_buffer.write(f"Length of chat history : {len(chat_history)}\n")
+   st.session_state.log_buffer.write(f"Length of chat history : {len([(message["role"], message["content"]) for message in st.session_state.messages])}\n")
    st.session_state.start_experiment = "stop-experiment"
    st.session_state.save_conversation = True
 
