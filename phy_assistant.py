@@ -638,11 +638,11 @@ if "experiment_condition" not in st.session_state:
    if st.session_state.experiment_condition == 1:
       st.session_state.log_buffer.write(" 1 : EXPERIMENT CONDITION \n")
       st.session_state.log_buffer.write("\n")
-      #st.write("EXPERIMENT")
+      st.write("EXPERIMENT")
    else:
       st.session_state.log_buffer.write(" 2 : CONTROL CONDITION \n")
       st.session_state.log_buffer.write("\n")
-      #st.write("CONTROL")
+      st.write("CONTROL")
 
 #if "experiment_condition" not in st.session_state: #### TEMPORARY EXPERIMENT CONDITION , 1 indicates experiment, 2 indicates control
    #st.session_state.experiment_condition = 1
