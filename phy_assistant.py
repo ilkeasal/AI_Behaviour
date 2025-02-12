@@ -688,9 +688,9 @@ if st.session_state.start_experiment=="pre-survey":
    days_input = st.number_input("On average, how many days per week do you engage in moderate to vigorous physical activity? (This includes activities such as exercise, active commuting (e.g., walking or cycling to work), physically demanding tasks at work, sports, or any other activities, as long as they are moderate to vigorous physical activity.)", min_value=0,max_value=7)
    hours_input = st.number_input("On average, how many minutes per day do you engage in physical activity at this level?",min_value=0,max_value=240)
    strength_input = st.number_input("On average, how many days a week do you perform muscle strengthening exercises, such as body weight exercises or resistance training?",min_value=0, max_value=7)
-   importance_input = survey.select_slider("How important is physical activity in your life? (The options are : Not important, Slightly important, Moderately important, Important, and, Very important)", options=["Not important","Slightly important","Moderately important","Important","Very important"], id= "Q5")
-   motivation_input = survey.select_slider("How motivated are you to maintain or enhance your physical activity level? (The options are : Not motivated, Slightly motivated, Moderately motivated, Motivated, and, Very motivated.)", options = ["Not motivated","Slightly motivated","Moderately motivated","Motivated","Very motivated"],id="Q6")
-   support_input = survey.select_slider("How do you feel about receiving support to become more physically active? (The options are : Strongly opposed, Somewhat opposed, Neutral, Somewhat open, and, Strongly open.)", options = ["Strongly opposed","Somewhat opposed","Neutral","Somewhat open","Strongly open"],id="Q7")
+   importance_input = survey.select_slider("How important is physical activity in your life? (The options are : Not important, Slightly important, Moderately important, Important, and, Very important)", options=["Not important","Slightly important","Moderately important","Important","Very important"], id= "Q1")
+   motivation_input = survey.select_slider("How motivated are you to maintain or enhance your physical activity level? (The options are : Not motivated, Slightly motivated, Moderately motivated, Motivated, and, Very motivated.)", options = ["Not motivated","Slightly motivated","Moderately motivated","Motivated","Very motivated"],id="Q2")
+   support_input = survey.select_slider("How do you feel about receiving support to become more physically active? (The options are : Strongly opposed, Somewhat opposed, Neutral, Somewhat open, and, Strongly open.)", options = ["Strongly opposed","Somewhat opposed","Neutral","Somewhat open","Strongly open"],id="Q3")
    #st.markdown(f"""
        #* Number of days: {days_input}
        #* Number of minutes: {hours_input}
@@ -1964,12 +1964,12 @@ elif st.session_state.experiment_condition == 2:
 
 if st.session_state.start_experiment == "post-survey":
    st.write("To finalize your participation, please complete the short survey below. Providing honest responses is essential to ensure your contributions are accurately reflected in the study. The scale ranges from strongly disagree to strongly agree, including options disagree, somewhat disagree, neutral, somewhat agree, and agree. \n")
-   question1 = survey.select_slider("Q1 : The chatbot provided me a customized conversation.", options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q1")
-   question2 = survey.select_slider("Q2 : I am satisfied with the advice given to me by this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
-   question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q3")
-   question4 = survey.select_slider("Q4 : I would recommend this chatbot to a friend who wants help with improving their physical activity.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q4")
-   question5 = survey.select_slider("Q5 : The chatbot recognized me as a unique individual.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q10")
-   question6 = survey.select_slider("Q4 : If in the future I need support in physical activity, I would be interested in a further dialogue with this chatbot.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q11")
+   question1 = survey.select_slider("Q1 : The chatbot provided me a customized conversation.", options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q4")
+   question2 = survey.select_slider("Q2 : I am satisfied with the advice given to me by this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q5")
+   question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q6")
+   question4 = survey.select_slider("Q4 : I would recommend this chatbot to a friend who wants help with improving their physical activity.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q7")
+   question5 = survey.select_slider("Q5 : The chatbot recognized me as a unique individual.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q8")
+   question6 = survey.select_slider("Q6 : If in the future I need support in physical activity, I would be interested in a further dialogue with this chatbot.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q9")
     
    submit_button = st.button("Submit",on_click=post_survey_submit)
 
