@@ -1968,8 +1968,8 @@ if st.session_state.start_experiment == "post-survey":
    question2 = survey.select_slider("Q2 : I am satisfied with the advice given to me by this chatbot.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q2")
    question3 = survey.select_slider("Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice.",options=["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id="Q3")
    question4 = survey.select_slider("Q4 : I would recommend this chatbot to a friend who wants help with improving their physical activity.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q4")
-   question5 = survey.select_slider("Q5 : The chatbot recognized me as a unique individual.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q5")
-   question6 = survey.select_slider("Q4 : If in the future I need support in physical activity, I would be interested in a further dialogue with this chatbot.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q6")
+   question5 = survey.select_slider("Q5 : The chatbot recognized me as a unique individual.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q10")
+   question6 = survey.select_slider("Q4 : If in the future I need support in physical activity, I would be interested in a further dialogue with this chatbot.",options =["Strongly Disagree","Disagree","Somewhat Disagree","Neutral","Somewhat Agree","Agree","Strongly Agree"],id = "Q11")
     
    submit_button = st.button("Submit",on_click=post_survey_submit)
 
