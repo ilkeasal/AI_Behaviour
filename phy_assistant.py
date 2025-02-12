@@ -1950,6 +1950,7 @@ elif st.session_state.experiment_condition == 2:
             response = st.write_stream(generate_response(answer))
             st.session_state.messages.append({"role":"assistant","content":response})
             st.session_state.log_buffer.write(f"ASSISTANT SAID : {response}\n")
+            st.session_state.log_buffer.write("\n")
 
 
          if len(chat_history) > 26: #Mean from the pilot study was 12
