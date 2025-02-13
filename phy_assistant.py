@@ -460,7 +460,7 @@ def submit_submit_function():
    st.session_state.log_buffer.write(f"Strength input : {strength_input}\n")
    st.session_state.log_buffer.write(f"Importance input : {importance_input}\n")
    st.session_state.log_buffer.write(f"Motivation input : {motivation_input}\n")
-   st.session_state.log_buffer.write(f"Support need input : {support_input}")
+   st.session_state.log_buffer.write(f"Support need input : {support_input}\n")
    total_activity_levels = days_input * hours_input
    st.session_state.log_buffer.write(f"Total activity : {total_activity_levels}\n")
    st.session_state.log_buffer.write(f"Chatbot user experience : {chatbot_use} \n")
