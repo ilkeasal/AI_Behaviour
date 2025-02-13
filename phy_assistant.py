@@ -1953,7 +1953,7 @@ elif st.session_state.experiment_condition == 2:
             st.session_state.log_buffer.write("\n")
 
 
-         if len(chat_history) > 26: #Mean from the pilot study was 12
+         if len(chat_history) > 21: #Mean from the pilot study was 12 then I increased it to 27 because of 7 concepts but with 6 concepts it is 22
             st.session_state.log_buffer.write(f"Stop the conversation button presented : {adjusted_time}\n")
             st.session_state.log_buffer.write("\n")
             stop_button = st.button("Stop the conversation.", on_click=stop_button)
