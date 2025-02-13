@@ -487,7 +487,7 @@ def post_survey_submit():
    st.session_state.log_buffer.write(f"Q3 : The chatbot used my thoughts and habits regarding physical activity to provide personalized advice. : {question3}\n")
    st.session_state.log_buffer.write(f"Q4 : I would recommend this chatbot to a friend who wants help with improving their physical activity. : {question4}\n")
    st.session_state.log_buffer.write(f"Q5 : The chatbot recognized me as a unique individual. : {question5}\n")
-   st.session_state.log_buffer.write(f"Q6 : If in the future I need support in physical activity, I would be interested in a further dialogue with this chatbot. {question6}\n")
+   st.session_state.log_buffer.write(f"Q6 : If in the future I need support in physical activity, I would be interested in a further dialogue with this chatbot. : {question6}\n")
    st.session_state.log_buffer.write(f"")
    st.session_state.log_buffer.write(f"Post-experiment questions completed : {adjusted_time}\n")
    st.session_state.log_buffer.write("\n")
